@@ -1,0 +1,9 @@
+{
+  "name": "Corse 2026 · Roadbook familial",
+  "short_name": "Corse 2026",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f3ec",
+  "theme_color": "#103f3f",
+  "icons": []
+}
