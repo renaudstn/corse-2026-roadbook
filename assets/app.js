@@ -237,10 +237,8 @@
     ribbon.hidden = false;
     $("#todayTitle").textContent = `${today.weekday} ${today.dayNum} · ${today.short}`;
     $("#todayLink").href = "#programme";
-    $("#brandSub").textContent = `Aujourd'hui · ${today.short}`;
     jumpToday.classList.remove("is-dim");
   } else {
-    $("#brandSub").textContent = nowISO < DATA.meta.start ? "Avant le départ" : "Séjour terminé";
     jumpToday.classList.add("is-dim");
   }
 
@@ -810,13 +808,6 @@
     setMenu(false);
     scrollToTop(true);
   };
-  $("#brandHome")?.addEventListener("click", goHomeTop);
-  $("#brandHome")?.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      goHomeTop(e);
-    }
-  });
   $("#heroTitle")?.addEventListener("click", goHomeTop);
   $$('a[href="#accueil"]').forEach((a) => a.addEventListener("click", goHomeTop));
 
@@ -826,10 +817,9 @@
   updateSwitcher();
   updateDrawerActive();
 
-  /* Hero wow: entrance + parallax + topbar state */
+  /* Hero wow: entrance + parallax */
   const hero = $("#accueil");
   const heroParallax = $("#heroParallax");
-  const topbar = $("#topbar");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   requestAnimationFrame(() => hero?.classList.add("is-ready"));
@@ -841,10 +831,6 @@
     const progress = Math.min(1, Math.max(0, -rect.top / (h * 0.75)));
     hero.style.setProperty("--hero-progress", progress.toFixed(3));
     hero.classList.toggle("is-leaving", progress > 0.02);
-
-    const onHero = rect.bottom > 80;
-    topbar?.setAttribute("data-on-hero", onHero ? "true" : "false");
-    topbar?.classList.toggle("is-solid", !onHero || progress > 0.55);
 
     if (!reduceMotion && heroParallax) {
       if (progress > 0.01) {
