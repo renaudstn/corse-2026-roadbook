@@ -1865,6 +1865,46 @@ a.btn {
   }
 }
 
+.day-alt-row {
+  margin: 0.85rem 0 0.25rem;
+}
+
+.day-alt-link {
+  background: var(--brand) !important;
+  color: #f4faf8 !important;
+  border-color: transparent !important;
+  font-weight: 700;
+}
+
+.day-alt-link:hover {
+  filter: brightness(1.06);
+}
+
+.alt-diff {
+  margin: 0.35rem 1.25rem 1rem;
+  padding: 0.95rem 1rem;
+  border-radius: 14px;
+  background: rgba(15, 46, 42, 0.06);
+  border: 1px solid rgba(15, 46, 42, 0.1);
+}
+
+.alt-diff h4 {
+  margin: 0 0 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.alt-diff ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
 /* ---------- Variante best-of page ---------- */
 .alt-entry {
   margin: 0.85rem 0 0;
@@ -1879,9 +1919,16 @@ a.btn {
   text-underline-offset: 0.15em;
 }
 
-.alt-page {
-  padding-bottom: 2rem;
-  background:
+.alt-page .menu-btn {
+  background: rgba(247, 248, 245, 0.88);
+  border-color: rgba(16, 25, 22, 0.12);
+  box-shadow: 0 10px 36px rgba(16, 25, 22, 0.12);
+}
+
+.alt-page .menu-btn span {
+  background: var(--ink);
+  box-shadow: none;
+}
     radial-gradient(1200px 500px at 10% -10%, rgba(47, 106, 120, 0.12), transparent 60%),
     radial-gradient(900px 420px at 100% 0%, rgba(166, 124, 82, 0.1), transparent 55%),
     linear-gradient(180deg, #e7ebe6 0%, var(--bg) 28%, var(--bg-deep) 100%);

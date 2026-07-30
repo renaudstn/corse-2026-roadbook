@@ -75,14 +75,23 @@
     window.scrollTo({ top: 0, left: 0, behavior: smooth ? "smooth" : "auto" });
   };
 
-  // Main page: always land at top. Alt + ?day=: keep query, scroll to #programme after render.
+  // Main page: land at top unless ?day= deep-link → programme. Alt + ?day=: keep query, scroll to #programme after render.
   if (!IS_ALT) {
-    scrollToTop(false);
-    if (location.hash && location.hash !== "#accueil") {
-      history.replaceState(null, "", location.pathname + location.search);
+    if (dayParam) {
+      // Keep ?day= and allow #programme from variante links
+      const scrollToProgramme = () => {
+        $("#programme")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+      requestAnimationFrame(scrollToProgramme);
+      window.addEventListener("load", scrollToProgramme, { once: true });
+    } else {
+      scrollToTop(false);
+      if (location.hash && location.hash !== "#accueil") {
+        history.replaceState(null, "", location.pathname + location.search);
+      }
+      requestAnimationFrame(() => scrollToTop(false));
+      window.addEventListener("load", () => scrollToTop(false), { once: true });
     }
-    requestAnimationFrame(() => scrollToTop(false));
-    window.addEventListener("load", () => scrollToTop(false), { once: true });
   }
 
   let selectedId =
@@ -611,6 +620,7 @@
           </div>
           <h3>${day.title}</h3>
           <p class="lead">${day.summary}</p>
+          <div class="day-alt-row">${altLinkHtml}</div>
           ${
             day.intensity != null
               ? `<div class="intensity" aria-label="Intensité ${day.intensity} sur 5">
@@ -755,7 +765,6 @@
           ${base ? `<span class="btn btn--small" style="cursor:default">Base · ${base.name}</span>` : ""}
           ${day.maps ? `<a class="btn btn--small" href="${day.maps}" target="_blank" rel="noopener">Google Maps</a>` : ""}
           ${base?.phone ? `<a class="btn btn--small" href="tel:${base.phone}">Appeler</a>` : ""}
-          ${altLinkHtml}
         </div>
 
         <div class="day-pager">
