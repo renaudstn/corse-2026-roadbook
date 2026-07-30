@@ -18,6 +18,17 @@
   const findToday = () => DATA.days.find((d) => d.date === nowISO) || null;
   const baseById = (id) => DATA.bases.find((b) => b.id === id);
   const place = (id) => DATA.places?.[id];
+  const placeInfoHtml = (p, { short = false } = {}) => {
+    if (!p) return "";
+    const name = escapeAttr(p.name);
+    if (!p.info) return name;
+    const label = escapeAttr(p.infoLabel || "Infos");
+    const href = escapeAttr(p.info);
+    if (short) {
+      return `<a class="place-link" href="${href}" target="_blank" rel="noopener">${name}</a>`;
+    }
+    return `<a class="place-link" href="${href}" target="_blank" rel="noopener">${name}<span class="place-link__src">${label} ↗</span></a>`;
+  };
   const dayIndex = (id) => DATA.days.findIndex((d) => d.id === id);
 
   // Always land at the very top (ignore restored scroll / leftover hashes)
@@ -272,8 +283,11 @@
   const addNumberedMarkers = (map, pts) => {
     const latLngs = pts.map((p) => [p.lat, p.lng]);
     pts.forEach((p, i) => {
+      const popup = p.info
+        ? `<strong>${i + 1}. ${escapeAttr(p.name)}</strong><br><a href="${escapeAttr(p.info)}" target="_blank" rel="noopener">${escapeAttr(p.infoLabel || "Infos")} ↗</a>`
+        : `<strong>${i + 1}. ${escapeAttr(p.name)}</strong>`;
       L.marker([p.lat, p.lng], { icon: markerIcon(i + 1, p.name), zIndexOffset: 100 + i })
-        .bindPopup(`<strong>${i + 1}. ${p.name}</strong>`)
+        .bindPopup(popup)
         .addTo(map);
     });
     return latLngs;
@@ -564,7 +578,7 @@
               .map((id, i) => {
                 const p = place(id);
                 return p
-                  ? `<li><span class="map-legend__n">${i + 1}</span><span>${p.name}</span></li>`
+                  ? `<li><span class="map-legend__n">${i + 1}</span><span>${placeInfoHtml(p)}</span></li>`
                   : "";
               })
               .join("")}
