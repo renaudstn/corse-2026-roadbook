@@ -20,6 +20,19 @@
   const place = (id) => DATA.places?.[id];
   const dayIndex = (id) => DATA.days.findIndex((d) => d.id === id);
 
+  // Always land at the very top (ignore restored scroll / leftover hashes)
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  const scrollToTop = (smooth = false) => {
+    window.scrollTo({ top: 0, left: 0, behavior: smooth ? "smooth" : "auto" });
+  };
+  scrollToTop(false);
+  // Clear hash anchors that would jump mid-page on load
+  if (location.hash && location.hash !== "#accueil") {
+    history.replaceState(null, "", location.pathname + location.search);
+  }
+  requestAnimationFrame(() => scrollToTop(false));
+  window.addEventListener("load", () => scrollToTop(false), { once: true });
+
   let selectedId =
     localStorage.getItem(dayKey) || (findToday()?.id ?? DATA.days[0].id);
   if (!DATA.days.some((d) => d.id === selectedId)) selectedId = DATA.days[0].id;
@@ -473,8 +486,12 @@
       btn.addEventListener("click", () => selectDay(btn.dataset.day, { scroll: false }));
     });
 
+    // Horizontal centering only — never scroll the page
     const activeBtn = $(`.day-pill[data-day="${selectedId}"]`, rail);
-    activeBtn?.scrollIntoView({ inline: "center", block: "nearest" });
+    if (activeBtn && rail) {
+      const left = activeBtn.offsetLeft - (rail.clientWidth - activeBtn.offsetWidth) / 2;
+      rail.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
+    }
   };
 
   const renderDay = () => {
@@ -785,6 +802,23 @@
     { rootMargin: "-35% 0px -50% 0px", threshold: [0.1, 0.35, 0.6] }
   );
   sections.forEach((s) => io.observe(s));
+
+  /* Brand / title → always back to absolute top */
+  const goHomeTop = (e) => {
+    e?.preventDefault?.();
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    setMenu(false);
+    scrollToTop(true);
+  };
+  $("#brandHome")?.addEventListener("click", goHomeTop);
+  $("#brandHome")?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      goHomeTop(e);
+    }
+  });
+  $("#heroTitle")?.addEventListener("click", goHomeTop);
+  $$('a[href="#accueil"]').forEach((a) => a.addEventListener("click", goHomeTop));
 
   /* ---------- Boot ---------- */
   renderRail();
