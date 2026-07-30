@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b2e2a" />
+  <meta name="description" content="Variante best-of Corse 2026 — mêmes campings, Calanques de Piana conservées, replis Melo/Capitello." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Corse 2026 · Variante best-of</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./icons/apple-touch.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body class="alt-page">
+  <a class="skip" href="#main">Aller au contenu</a>
+
+  <header class="alt-top">
+    <a class="alt-top__back" href="./index.html">← Programme principal</a>
+    <p class="alt-top__badge">Variante</p>
+  </header>
+
+  <main id="main" class="alt-main">
+    <section class="alt-hero">
+      <p class="alt-hero__kicker">3 → 16 août 2026 · mêmes campings</p>
+      <h1>Variante best-of</h1>
+      <p class="alt-hero__lead" id="altLead"></p>
+      <div class="alt-hero__actions">
+        <a class="btn btn--primary" href="#jours">Voir les jours</a>
+        <a class="btn btn--ghost" href="#replis-melo">Replis Melo / Capitello</a>
+      </div>
+    </section>
+
+    <section class="panel alt-panel" id="principes">
+      <div class="section-head">
+        <h2>Principes de cette variante</h2>
+        <p>Chaque jour indique ce qui est conservé, ajouté, remplacé ou proposé en repli.</p>
+      </div>
+      <div class="alt-principles" id="altPrinciples"></div>
+    </section>
+
+    <section class="panel alt-panel" id="replis-melo">
+      <div class="section-head">
+        <h2 id="meloTitle">Replis Melo & Capitello</h2>
+        <p id="meloIntro"></p>
+      </div>
+      <div class="alt-fallbacks" id="meloFallbacks"></div>
+    </section>
+
+    <section class="panel alt-panel panel--flush" id="jours">
+      <div class="section-head section-head--pad">
+        <h2>Programme jour par jour</h2>
+        <p>Bases inchangées · Calanques de Piana conservées · diffs explicites vs programme principal</p>
+      </div>
+      <div class="alt-days" id="altDays"></div>
+    </section>
+
+    <section class="panel alt-panel">
+      <div class="section-head">
+        <h2>Revenir au programme principal</h2>
+        <p>Le roadbook d’origine reste la référence « équilibre famille ». Cette page est une option plus ambitieuse.</p>
+      </div>
+      <p style="padding: 0 var(--pad) 1.5rem">
+        <a class="btn btn--solid" href="./index.html#programme">Ouvrir le programme principal</a>
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Variante best-of · n’écrase pas le programme principal · infos au 30 juillet 2026.</p>
+  </footer>
+
+  <script src="./data/alt-programme.js"></script>
+  <script src="./assets/alt-app.js"></script>
+</body>
+</html>

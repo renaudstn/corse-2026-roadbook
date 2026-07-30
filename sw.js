@@ -1,14 +1,17 @@
-const CACHE = "corse2026-v18";
+const CACHE = "corse2026-v19";
 const ASSETS = [
   "./",
   "./index.html",
+  "./alt.html",
   "./assets/styles.css",
   "./assets/app.js",
+  "./assets/alt-app.js",
   "./assets/vendor/leaflet.js",
   "./assets/vendor/leaflet.css",
   "./assets/images/hero-desktop.jpg",
   "./assets/images/hero-mobile.jpg",
   "./data/trip.js",
+  "./data/alt-programme.js",
   "./manifest.webmanifest",
   "./icons/icon.svg",
 ];
