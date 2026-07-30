@@ -792,6 +792,64 @@
   updateSwitcher();
   updateDrawerActive();
 
+  /* Hero wow: entrance + parallax + topbar state */
+  const hero = $("#accueil");
+  const heroParallax = $("#heroParallax");
+  const topbar = $("#topbar");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  requestAnimationFrame(() => hero?.classList.add("is-ready"));
+
+  const onScrollHero = () => {
+    if (!hero) return;
+    const rect = hero.getBoundingClientRect();
+    const h = hero.offsetHeight || 1;
+    const progress = Math.min(1, Math.max(0, -rect.top / (h * 0.75)));
+    hero.style.setProperty("--hero-progress", progress.toFixed(3));
+    hero.classList.toggle("is-leaving", progress > 0.02);
+
+    const onHero = rect.bottom > 80;
+    topbar?.setAttribute("data-on-hero", onHero ? "true" : "false");
+    topbar?.classList.toggle("is-solid", !onHero || progress > 0.55);
+
+    if (!reduceMotion && heroParallax) {
+      if (progress > 0.01) {
+        heroParallax.style.animation = "none";
+        const y = Math.min(140, Math.max(0, -rect.top * 0.38));
+        heroParallax.style.transform = `translate3d(0, ${y}px, 0) scale(1.1)`;
+      } else {
+        heroParallax.style.animation = "";
+        heroParallax.style.transform = "";
+      }
+    }
+  };
+
+  let ticking = false;
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        onScrollHero();
+        ticking = false;
+      });
+    },
+    { passive: true }
+  );
+  onScrollHero();
+
+  // Section reveal
+  const revealIo = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) e.target.classList.add("is-in");
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+  );
+  $$("[data-reveal]").forEach((el) => revealIo.observe(el));
+
   const bootMaps = () => {
     initOverviewMap();
     initBaseMaps();
