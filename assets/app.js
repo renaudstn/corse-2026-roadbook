@@ -72,8 +72,8 @@
     drawer.setAttribute("aria-hidden", String(!open));
     menuBtn.setAttribute("aria-expanded", String(open));
     scrim.hidden = !open;
-    if (!open && tipLayer?.hidden !== false) document.body.style.overflow = open ? "hidden" : "";
-    document.body.style.overflow = open ? "hidden" : tipLayer?.hidden === false ? "hidden" : "";
+    const tipOpen = tipLayer && !tipLayer.hidden;
+    document.body.style.overflow = open || tipOpen ? "hidden" : "";
   };
 
   menuBtn?.addEventListener("click", () => setMenu(!drawer.classList.contains("is-open")));
