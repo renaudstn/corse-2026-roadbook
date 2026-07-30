@@ -1,4 +1,4 @@
-const CACHE = "corse2026-v2";
+const CACHE = "corse2026-v4";
 const ASSETS = [
   "./",
   "./index.html",
@@ -7,6 +7,8 @@ const ASSETS = [
   "./data/trip.js",
   "./manifest.webmanifest",
   "./icons/icon.svg",
+  "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
+  "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
 ];
 
 self.addEventListener("install", (event) => {
@@ -31,7 +33,7 @@ self.addEventListener("fetch", (event) => {
     caches.match(request).then((cached) => {
       const fetched = fetch(request)
         .then((response) => {
-          if (response && response.status === 200 && response.type === "basic") {
+          if (response && response.status === 200 && (response.type === "basic" || response.type === "cors")) {
             const clone = response.clone();
             caches.open(CACHE).then((cache) => cache.put(request, clone));
           }
