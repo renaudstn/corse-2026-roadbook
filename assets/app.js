@@ -228,8 +228,10 @@
     )
     .join("");
 
-  /* ---------- Today ---------- */
+  /* ---------- Today / Programme ---------- */
   const today = findToday();
+  const firstDay = DATA.days[0];
+  const programmeTarget = today || firstDay;
   const ribbon = $("#todayRibbon");
   const jumpToday = $("#jumpToday");
 
@@ -237,25 +239,15 @@
     ribbon.hidden = false;
     $("#todayTitle").textContent = `${today.weekday} ${today.dayNum} · ${today.short}`;
     $("#todayLink").href = "#programme";
-    jumpToday.classList.remove("is-dim");
-  } else {
-    jumpToday.classList.add("is-dim");
   }
 
+  jumpToday?.classList.remove("is-dim");
   jumpToday?.addEventListener("click", () => {
-    if (!today) return;
-    selectDay(today.id);
-  });
-  $("#ctaProgramme")?.addEventListener("click", (e) => {
-    if (today) {
-      e.preventDefault();
-      selectDay(today.id);
-    }
+    selectDay(programmeTarget.id);
   });
   $("#todayLink")?.addEventListener("click", (e) => {
     e.preventDefault();
-    if (today) selectDay(today.id);
-    else $("#programme")?.scrollIntoView({ behavior: "smooth" });
+    selectDay(programmeTarget.id);
   });
 
   /* ---------- Maps ---------- */
