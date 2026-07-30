@@ -93,53 +93,32 @@ a.btn {
   top: 0.75rem;
 }
 
-/* Bottom menu — liquid glass (burger only, sticky) */
-.bottombar {
+/* Sticky burger (no outer shell) */
+.menu-btn {
   position: fixed;
   left: max(0.85rem, env(safe-area-inset-left, 0px));
   bottom: calc(0.65rem + env(safe-area-inset-bottom, 0px));
   z-index: 40;
-  display: flex;
-  align-items: center;
-  padding: 0.4rem;
-  width: auto;
-  border-radius: 1.2rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 0.95rem;
   background: rgba(6, 18, 16, 0.52);
-  border: 1px solid rgba(255, 255, 255, 0.32);
   box-shadow: 0 10px 32px rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(18px) saturate(1.2);
   -webkit-backdrop-filter: blur(18px) saturate(1.2);
-  transition:
-    background 0.35s var(--ease),
-    border-color 0.35s var(--ease),
-    box-shadow 0.35s var(--ease),
-    backdrop-filter 0.35s ease;
-}
-
-.bottombar.is-solid {
-  background: rgba(247, 248, 245, 0.72);
-  border-color: rgba(16, 25, 22, 0.12);
-  box-shadow: 0 10px 36px rgba(16, 25, 22, 0.12);
-  backdrop-filter: blur(18px) saturate(1.25);
-  -webkit-backdrop-filter: blur(18px) saturate(1.25);
-}
-
-.icon-btn {
-  width: 2.6rem;
-  height: 2.6rem;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 0.95rem;
-  background: rgba(255, 255, 255, 0.22);
   display: grid;
   place-content: center;
   gap: 4px;
   cursor: pointer;
   padding: 0;
-  flex-shrink: 0;
-  transition: background 0.3s ease, border-color 0.3s ease;
+  transition:
+    background 0.35s var(--ease),
+    border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
 }
 
-.icon-btn span {
+.menu-btn span {
   display: block;
   width: 1rem;
   height: 1.5px;
@@ -149,13 +128,15 @@ a.btn {
   transition: background 0.3s ease;
 }
 
-.bottombar.is-solid .icon-btn {
-  background: rgba(255, 255, 255, 0.88);
-  border-color: var(--line);
+.menu-btn.is-solid {
+  background: rgba(247, 248, 245, 0.88);
+  border-color: rgba(16, 25, 22, 0.12);
+  box-shadow: 0 10px 36px rgba(16, 25, 22, 0.12);
 }
 
-.bottombar.is-solid .icon-btn span {
+.menu-btn.is-solid span {
   background: var(--ink);
+  box-shadow: none;
 }
 
 /* Keep unused brand mark styles for drawers if needed */
@@ -1771,7 +1752,7 @@ a.btn {
 
 /* Desktop refinements */
 @media (min-width: 960px) {
-  .bottombar {
+  .menu-btn {
     left: max(1.25rem, env(safe-area-inset-left, 0px));
   }
 
