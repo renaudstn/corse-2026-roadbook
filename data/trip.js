@@ -10,9 +10,34 @@ window.CORSE2026 = {
     spirit: "Nature, peu de villes, camping-car peu déplacé",
   },
 
+  places: {
+    ajaccio: { name: "Ajaccio", lat: 41.9192, lng: 8.7386 },
+    sagone: { name: "Sagone", lat: 42.1120, lng: 8.6880 },
+    vico: { name: "Vico", lat: 42.1667, lng: 8.8000 },
+    evisa: { name: "Évisa", lat: 42.2530, lng: 8.8010 },
+    aitone: { name: "Piscines d'Aïtone", lat: 42.2680, lng: 8.8350 },
+    porto: { name: "Porto", lat: 42.2660, lng: 8.6940 },
+    piana: { name: "Piana", lat: 42.2380, lng: 8.6360 },
+    ficajola: { name: "Ficajola", lat: 42.2450, lng: 8.6150 },
+    ota: { name: "Ota / Spelunca", lat: 42.2570, lng: 8.7460 },
+    corte: { name: "Corte", lat: 42.3060, lng: 9.1500 },
+    bartho: { name: "Chez Bartho", lat: 42.3010, lng: 9.1450 },
+    tavignano: { name: "Tavignano", lat: 42.3050, lng: 9.1350 },
+    vizzavona: { name: "Vizzavona", lat: 42.1170, lng: 9.1330 },
+    abbartello: { name: "Abbartello", lat: 41.7070, lng: 8.8460 },
+    filitosa: { name: "Filitosa", lat: 41.7470, lng: 8.8720 },
+    cupabia: { name: "Cupabia", lat: 41.7250, lng: 8.8250 },
+    bonifacio: { name: "Bonifacio", lat: 41.3870, lng: 9.1590 },
+    campomoro: { name: "Campomoro", lat: 41.6290, lng: 8.8080 },
+    roccapina: { name: "Roccapina", lat: 41.4950, lng: 8.9280 },
+    sartene: { name: "Sartène", lat: 41.6210, lng: 8.9730 },
+  },
+
   bases: [
     {
       id: "sagone",
+      lat: 42.112,
+      lng: 8.688,
       name: "Sagone / Vico",
       role: "Nuit-étape",
       dates: "3 août",
@@ -25,6 +50,8 @@ window.CORSE2026 = {
     },
     {
       id: "acciola",
+      lat: 42.253,
+      lng: 8.801,
       name: "Camping L'Acciola",
       place: "Évisa",
       role: "Base montagne",
@@ -41,6 +68,8 @@ window.CORSE2026 = {
     },
     {
       id: "bartho",
+      lat: 42.301,
+      lng: 9.145,
       name: "Camping Chez Bartho",
       place: "Corte",
       role: "Base intérieure",
@@ -57,6 +86,8 @@ window.CORSE2026 = {
     },
     {
       id: "abbartello",
+      lat: 41.707,
+      lng: 8.846,
       name: "Camping Abbartello",
       place: "Olmeto-Plage",
       role: "Base mer",
@@ -158,6 +189,13 @@ window.CORSE2026 = {
       remember: "Garder la voiture derrière le camping-car sans se perdre dans Ajaccio.",
       vigilance: "Obtenir avant le 3 le nom exact du camping et l'accord pour ~22 h. Prévoir un repli officiel secteur Sagone.",
       planB: "Si nuit non confirmée : camping officiel ouvert tard dans le secteur Sagone/Vico, ou aire autorisée clairement signalée.",
+      mapMarkers: ["ajaccio", "sagone"],
+      mapZoom: 10,
+      pack: ["Sac 1re nuit", "Lampe", "Dîner froid", "Habits J+1"],
+      tips: [
+        { title: 'Arrivée tardive', text: 'Prévenir le camping : arrivée ~22 h. Installation minimale uniquement.' },
+        { title: 'Convoi', text: 'Voiture derrière le camping-car. Ne pas se séparer dans Ajaccio.' }
+      ],
       maps: "https://www.google.com/maps/dir/Ajaccio/Sagone",
     },
     {
@@ -191,6 +229,13 @@ window.CORSE2026 = {
       remember: "Wifi surtout autour du bar/restaurant. Camping petit : installation calme.",
       vigilance: "Vasques naturelles non surveillées. Chaussures adhérentes, adulte au contact de chaque enfant. Pas d'entrée si débit fort ou orage.",
       planB: "Si Aïtone trop chargé ou conditions mauvaises : balade courte autour d'Évisa + temps libre au camping.",
+      mapMarkers: ["sagone", "vico", "evisa", "aitone"],
+      mapZoom: 10,
+      pack: ["Courses 2 j", "Couche chaude", "Chaussures rivière"],
+      tips: [
+        { title: 'Altitude', text: '930 m : soirées fraîches, sortir une polaire dès le 1er soir.' },
+        { title: 'Aïtone', text: 'Eau froide, non surveillée. Adulte au contact de chaque enfant.' }
+      ],
       maps: "https://www.google.com/maps/dir/Sagone/%C3%89visa",
     },
     {
@@ -225,6 +270,13 @@ window.CORSE2026 = {
       remember: "Départ tôt = parking plus simple + températures plus douces.",
       vigilance: "Ne jamais bloquer la chaussée dans les calanques. Demi-tour si Ficajola saturée.",
       planB: "Rester sur Piana / Porto : promenade courte + plage de Porto, retour plus tôt.",
+      mapMarkers: ["evisa", "porto", "piana", "ficajola"],
+      mapZoom: 10,
+      pack: ["Pique-nique", "Ombre", "Beaucoup d’eau"],
+      tips: [
+        { title: 'Parking', text: 'Ficajola saturée vite : départ tôt ou plan B Piana/Porto.' },
+        { title: 'Calanques', text: 'Arrêts uniquement sur emplacements autorisés, jamais sur la chaussée.' }
+      ],
       maps: "https://www.google.com/maps/dir/%C3%89visa/Piana/Plage+de+Ficajola",
     },
     {
@@ -259,6 +311,13 @@ window.CORSE2026 = {
       remember: "Opérateur avec annulation / report météo. Vérifier escale Girolata et taille du bateau.",
       vigilance: "Le créneau 9 h est une recommandation, pas une réservation. Confirmer lieu d'embarquement.",
       planB: "Si mer trop forte ou annulation : matinée calme à Porto (plage / port) + retour anticipé au camping.",
+      mapMarkers: ["evisa", "porto"],
+      mapZoom: 11,
+      pack: ["Coupe-vent", "Crème", "Anti-mal des transports"],
+      tips: [
+        { title: 'Réservation', text: 'Créneau 9 h = conseil. Confirmer heure, embarquement et annulation météo.' },
+        { title: 'Enfants', text: 'Places ombragées si possible, eau accessible, coupe-vent même par beau temps.' }
+      ],
       maps: "https://www.google.com/maps/dir/%C3%89visa/Porto+Corse",
     },
     {
@@ -293,6 +352,13 @@ window.CORSE2026 = {
       remember: "Appeler Chez Bartho aujourd'hui pour confirmer accueil (sans demander de réservation).",
       vigilance: "Ne pas prolonger au-delà du pont de Zaglia sans info locale. Forte chaleur → garder seulement Aïtone ou châtaigniers.",
       planB: "Conserver uniquement châtaigniers + Aïtone, supprimer Spelunca, rentrer plus tôt pour ranger.",
+      mapMarkers: ["evisa", "aitone", "ota"],
+      mapZoom: 11,
+      pack: ["Plein carburant", "Eau CC", "Prêt départ 8"],
+      tips: [
+        { title: 'Demain Bartho', text: 'Appeler Chez Bartho aujourd’hui (sans demander de résa). Départ 7 h 15 demain.' },
+        { title: 'Spelunca', text: 'S’arrêter au pont de Zaglia. Au-delà : trop long pour 5 et 8 ans.' }
+      ],
       maps: "https://www.google.com/maps/dir/%C3%89visa/Ota",
     },
     {
@@ -329,6 +395,13 @@ window.CORSE2026 = {
       remember: "Le camping ne garantit jamais de place. La marge avant midi est stratégique.",
       vigilance: "Si complet à 9 h 30 : appeler les replis préparés avant de déplacer le camping-car au hasard.",
       planB: "Autres campings Corte / secteur (liste à avoir dans le téléphone) — décider sans attendre.",
+      mapMarkers: ["evisa", "corte", "bartho"],
+      mapZoom: 9,
+      pack: ["Petit-déj prêt", "Replis Corte", "Téléphone Bartho"],
+      tips: [
+        { title: 'Sans résa', text: 'Aucune course ni visite avant l’emplacement. Si complet → replis immédiatement.' },
+        { title: 'Cible', text: 'Arriver avant 12 h, idéalement ~9 h 30. Marge = priorité n°1 du séjour.' }
+      ],
       maps: "https://www.google.com/maps/dir/%C3%89visa/Corte",
     },
     {
@@ -363,6 +436,13 @@ window.CORSE2026 = {
       remember: "Vérifier info officielle la veille et le matin même (suspensions possibles liées aux incendies).",
       vigilance: "Ne jamais forcer Restonica si l'accès n'est pas ouvert officiellement.",
       planB: "Tavignano depuis le camping = programme principal de repli, excellent pour les enfants.",
+      mapMarkers: ["corte", "tavignano"],
+      mapZoom: 12,
+      pack: ["Info Restonica", "Chaussures", "Gourdes"],
+      tips: [
+        { title: 'Restonica', text: 'Vérifier la veille et le matin. Si fermée / navette KO → Tavignano depuis le camping.' },
+        { title: 'Enfants', text: 'Pas de lacs Melo/Capitello : trop longs. Objectif vallée + rivière.' }
+      ],
       maps: "https://www.google.com/maps/search/Vall%C3%A9e+du+Tavignano+Corte",
     },
     {
@@ -397,6 +477,12 @@ window.CORSE2026 = {
       remember: "Vizzavona = programme principal. Verghellu = supprimable sans culpabilité.",
       vigilance: "Respecter fermetures de massifs. Ne pas prolonger si les enfants ralentissent.",
       planB: "Matinée Corte (musée / citadelle) + baignade Tavignano + préparation départ.",
+      mapMarkers: ["corte", "vizzavona"],
+      mapZoom: 10,
+      pack: ["Pique-nique", "Couche forêt"],
+      tips: [
+        { title: 'Rythme', text: 'Vizzavona = principal. Verghellu = option supprimable sans culpabilité.' }
+      ],
       maps: "https://www.google.com/maps/dir/Corte/Vizzavona",
     },
     {
@@ -431,6 +517,13 @@ window.CORSE2026 = {
       remember: "Plage ~30 m. Réception 7 h–21 h. Barbecues interdits.",
       vigilance: "Trafic sensible autour d'Ajaccio et Propriano. Ne pas placer de visite pendant le transfert.",
       planB: "Si retard trafic : avancer l'arrivée, reporter courses au lendemain, prioriser installation + repos.",
+      mapMarkers: ["corte", "abbartello"],
+      mapZoom: 8,
+      pack: ["Démontage complet", "Pause conducteur"],
+      tips: [
+        { title: 'Mer', text: 'Plage à ~30 m. Boulanger le matin. Barbecues interdits.' },
+        { title: 'Transfert', text: 'Aucune visite en route. Objectif : installés avant / autour du déjeuner.' }
+      ],
       maps: "https://www.google.com/maps/dir/Corte/Olmeto-Plage",
     },
     {
@@ -465,6 +558,12 @@ window.CORSE2026 = {
       remember: "Commencer par la visite évite le plein soleil sur le site archéologique.",
       vigilance: "Surveiller hydratation et soleil sur Cupabia (peu d'ombre naturelle parfois).",
       planB: "Filitosa le matin + déjeuner camping + plage Abbartello sans trajet supplémentaire.",
+      mapMarkers: ["abbartello", "filitosa", "cupabia"],
+      mapZoom: 11,
+      pack: ["Chapeaux", "Pique-nique", "Eau"],
+      tips: [
+        { title: 'Ordre', text: 'Filitosa le matin au frais, Cupabia l’après-midi. Combo idéal post-transfert.' }
+      ],
       maps: "https://www.google.com/maps/dir/Olmeto-Plage/Filitosa/Plage+de+Cupabia",
     },
     {
@@ -501,6 +600,13 @@ window.CORSE2026 = {
       remember: "Ne pas ajouter de plage éloignée. Réserver le bateau seulement après validation de l'heure d'arrivée.",
       vigilance: "Temps réel très dépendant du trafic d'août et du stationnement. Partir à 7 h est essentiel.",
       planB: "Si retard : supprimer le bateau, concentrer port + belvédères, repartir plus tôt.",
+      mapMarkers: ["abbartello", "bonifacio"],
+      mapZoom: 8,
+      pack: ["Pique-nique secours", "Départ 7 h"],
+      tips: [
+        { title: 'Grosse journée', text: 'Seule vraie journée urbaine. Partir à 7 h. Pas de plage éloignée en plus.' },
+        { title: 'Bateau', text: 'Réserver seulement après validation de l’heure d’arrivée réelle.' }
+      ],
       maps: "https://www.google.com/maps/dir/Olmeto-Plage/Bonifacio",
     },
     {
@@ -535,6 +641,12 @@ window.CORSE2026 = {
       remember: "Marche le matin, plage pour récupérer. Sentiers côtiers : rester sur itinéraires ouverts.",
       vigilance: "Restrictions incendie possibles sur le littoral. Vérifier la veille.",
       planB: "Parking saturé ou massif fermé → plage Abbartello / Cupabia, journée récupération totale.",
+      mapMarkers: ["abbartello", "campomoro"],
+      mapZoom: 10,
+      pack: ["Chaussures fermées", "Pique-nique"],
+      tips: [
+        { title: 'Récup', text: 'Marche le matin, plage l’après-midi. Journée tampon après Bonifacio.' }
+      ],
       maps: "https://www.google.com/maps/dir/Olmeto-Plage/Campomoro",
     },
     {
@@ -570,6 +682,13 @@ window.CORSE2026 = {
       remember: "Ne pas engager le camping-car. Si accès plage mauvais → belvédère + plage plus accessible.",
       vigilance: "Le 15 août peut être très chargé. Anticiper parking et chaleur.",
       planB: "Belvédère Roccapina uniquement + plage de repli (Cupabia / Abbartello) + Sartène en fin de matinée.",
+      mapMarkers: ["abbartello", "roccapina", "sartene"],
+      mapZoom: 9,
+      pack: ["Préparer restitution", "Eau + ombre"],
+      tips: [
+        { title: '15 août', text: 'Très chargé. Si piste Roccapina mauvaise → belvédère + plage de repli.' },
+        { title: 'Soir', text: 'Préparer le départ du 16 dès le retour (sauf couchage).' }
+      ],
       maps: "https://www.google.com/maps/dir/Olmeto-Plage/Roccapina/Sart%C3%A8ne",
     },
     {
@@ -606,6 +725,12 @@ window.CORSE2026 = {
       remember: "Prévoir la veille l'adresse station-service compatible gabarit camping-car.",
       vigilance: "Conserver contrat, état des lieux initial, justificatifs carburant et coordonnées agence à portée de main.",
       planB: "Si gros retard : appeler l'agence immédiatement, prioriser restitution propre sur toute autre tâche.",
+      mapMarkers: ["abbartello", "ajaccio"],
+      mapZoom: 9,
+      pack: ["Docs accessibles", "Photos CC", "Carburant"],
+      tips: [
+        { title: 'Marge', text: 'Viser 12 h, pas 13 h 45. Contrat / clés / photos hors valises déjà chargées.' }
+      ],
       maps: "https://www.google.com/maps/dir/Olmeto-Plage/Ajaccio",
     },
   ],
