@@ -349,11 +349,11 @@
   ];
 
   const altBuilt = build([
-    { id: "camping", label: "Campings & taxes", icon: "⛺", items: campingMain },
-    { id: "fuel", label: "Carburant", icon: "⛽", items: fuelAlt },
-    { id: "activities", label: "Activités & tickets", icon: "🎫", items: activitiesAlt },
-    { id: "food", label: "Nourriture", icon: "🍽️", items: foodMain },
-    { id: "misc", label: "Divers", icon: "🧰", items: miscMain },
+    { id: "camping", label: "Campings & taxes", items: campingMain },
+    { id: "fuel", label: "Carburant", items: fuelAlt },
+    { id: "activities", label: "Activités & tickets", items: activitiesAlt },
+    { id: "food", label: "Nourriture", items: foodMain },
+    { id: "misc", label: "Divers", items: miscMain },
   ]);
 
   DATA.budgetAlt = {

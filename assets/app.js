@@ -912,7 +912,7 @@
             (cat) => `
           <details class="budget-cat">
             <summary>
-              <span class="budget-cat__title">${cat.icon || ""} ${escapeAttr(cat.label)}</span>
+              <span class="budget-cat__title">${escapeAttr(cat.label)}</span>
               <span class="budget-cat__sum">${money(cat.subtotal.mid)}</span>
             </summary>
             <ul class="budget-items">
