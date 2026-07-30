@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0e3a36" />
+  <meta name="theme-color" content="#0b2e2a" />
   <meta name="description" content="Roadbook familial Corse 2026 — programme jour par jour du 3 au 16 août." />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -13,14 +13,16 @@
   <link rel="apple-touch-icon" href="./icons/apple-touch.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="./assets/images/hero-mobile.jpg" media="(max-width: 767px)" />
+  <link rel="preload" as="image" href="./assets/images/hero-desktop.jpg" media="(min-width: 768px)" />
   <link rel="stylesheet" href="./assets/vendor/leaflet.css" />
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body>
   <a class="skip" href="#main">Aller au contenu</a>
 
-  <header class="topbar" id="topbar">
+  <header class="topbar" id="topbar" data-on-hero="true">
     <div class="topbar__inner">
       <button class="icon-btn" id="menuBtn" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="drawer">
         <span></span><span></span><span></span>
@@ -67,38 +69,67 @@
 
   <main id="main">
     <section class="hero" id="accueil">
-      <div class="hero__atmosphere" aria-hidden="true"></div>
+      <div class="hero__media" aria-hidden="true">
+        <div class="hero__parallax" id="heroParallax">
+          <picture>
+            <source media="(min-width: 768px)" srcset="./assets/images/hero-desktop.jpg" />
+            <img
+              class="hero__img"
+              src="./assets/images/hero-mobile.jpg"
+              alt=""
+              width="1200"
+              height="1800"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+        </div>
+        <div class="hero__veil"></div>
+        <div class="hero__grain"></div>
+      </div>
+
       <div class="hero__content">
-        <p class="hero__kicker">3 → 16 août 2026</p>
-        <h1 class="hero__title">Corse 2026</h1>
-        <p class="hero__lead">Roadbook familial · nature, peu de villes, camping-car peu déplacé.</p>
-        <div class="hero__cta">
+        <p class="hero__kicker" data-hero-reveal>3 → 16 août 2026</p>
+        <h1 class="hero__title" aria-label="Corse 2026">
+          <span class="hero__title-line" data-hero-reveal>Corse</span>
+          <span class="hero__title-year" data-hero-reveal>2026</span>
+        </h1>
+        <p class="hero__lead" data-hero-reveal>
+          Roadbook familial · nature, peu de villes, camping-car peu déplacé.
+        </p>
+        <div class="hero__cta" data-hero-reveal>
           <a class="btn btn--primary" href="#programme" id="ctaProgramme">Voir le programme</a>
-          <a class="btn btn--ghost" href="#bases">Les bases</a>
         </div>
       </div>
-      <div class="hero__ribbon" id="todayRibbon" hidden>
+
+      <a class="hero__scroll" href="#overview" aria-label="Continuer vers le séjour">
+        <span>Explorer</span>
+      </a>
+    </section>
+
+    <div class="today-strip" id="todayRibbon" hidden>
+      <div class="today-strip__inner">
         <div>
           <p class="eyebrow">Aujourd'hui</p>
           <p class="today-title" id="todayTitle"></p>
         </div>
-        <a class="btn btn--small" id="todayLink" href="#programme">Ouvrir</a>
+        <a class="btn btn--small btn--solid" id="todayLink" href="#programme">Ouvrir le jour</a>
       </div>
-    </section>
+    </div>
 
     <section class="panel" id="overview">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2>Le séjour en un regard</h2>
         <p>14 jours · 13 nuits · 3 bases · 1 camping-car + 1 voiture</p>
       </div>
-      <div class="stat-row" id="statRow"></div>
-      <div class="overview-map-wrap">
+      <div class="stat-row" id="statRow" data-reveal></div>
+      <div class="overview-map-wrap" data-reveal>
         <div id="overviewMap" class="map map--overview" role="img" aria-label="Carte des bases du séjour"></div>
         <ol class="map-legend map-legend--overview" id="overviewLegend"></ol>
         <p class="map-caption">Bases dans l’ordre du séjour · trait = transfert principal</p>
       </div>
-      <div class="route-strip" id="routeStrip" aria-label="Bases du séjour"></div>
-      <div class="rules" id="rules"></div>
+      <div class="route-strip" id="routeStrip" aria-label="Bases du séjour" data-reveal></div>
+      <div class="rules" id="rules" data-reveal></div>
     </section>
 
     <section class="panel panel--flush" id="programme">
