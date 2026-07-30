@@ -1615,14 +1615,13 @@ a.btn {
 .tip-card {
   width: min(28rem, 100%);
   background: #f7fbf9;
-  border-radius: 1.35rem 1.35rem 1.1rem 1.1rem;
+  border-radius: 1.2rem;
   padding: 1.25rem 1.2rem 1.35rem;
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
   position: relative;
   animation: rise 0.3s var(--ease) both;
-  margin-bottom: 0;
-  border-radius: 1.2rem;
+  margin-bottom: calc(var(--bottombar) + 0.25rem);
 }
 
 .tip-card__close {
