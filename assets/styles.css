@@ -1880,6 +1880,7 @@ a.btn {
 }
 
 .alt-page {
+  padding-bottom: 2rem;
   background:
     radial-gradient(1200px 500px at 10% -10%, rgba(47, 106, 120, 0.12), transparent 60%),
     radial-gradient(900px 420px at 100% 0%, rgba(166, 124, 82, 0.1), transparent 55%),
