@@ -173,6 +173,7 @@ window.CORSE2026 = {
       tags: ["transfert", "camping-car"],
       summary: "Débarquement vers 20 h, route côtière vers Sagone/Vico, installation minimale pour repartir tôt.",
       enrich: "Prévoir un sac « première nuit » déjà accessible : pyjamas, trousses, lampe, petit-déj, eau, habits du lendemain.",
+      why: 'Journée d’arrivée volontairement minimale : récupérer les véhicules, rejoindre une nuit-étape proche, et préserver l’énergie pour la montée du lendemain. L’intérêt est la marge de sécurité après un débarquement tardif, pas le tourisme.',
       metrics: [
         { label: "Route", value: "~55 km" },
         { label: "Conduite", value: "1 h 10" },
@@ -211,6 +212,7 @@ window.CORSE2026 = {
       tags: ["transfert", "baignade", "nature"],
       summary: "Montée vers Évisa, installation complète à L'Acciola, après-midi fraîcheur aux piscines d'Aïtone.",
       enrich: "À 930 m, les soirées sont nettement plus fraîches qu'en bord de mer : sortir une couche chaude dès le premier soir.",
+      why: 'Premier vrai ancrage du séjour : installer le camping-car en altitude à L’Acciola, faire les courses de base, puis goûter l’eau fraîche d’Aïtone. Le programme mélange transfert utile et première baignade nature, sans forcer la montagne.',
       metrics: [
         { label: "Transfert", value: "~55 km" },
         { label: "Conduite", value: "1 h 20" },
@@ -251,6 +253,7 @@ window.CORSE2026 = {
       tags: ["voiture", "plage", "photos"],
       summary: "Départ tôt pour les calanques, pause à Piana, longue plage à Ficajola avant la chaleur.",
       enrich: "Emporter le pique-nique complet et un filet d'ombre : Ficajola est magnifique mais peu équipée.",
+      why: 'Journée côte ouest signature : calanques de Piana pour le paysage, Ficajola pour la plage longue. On part tôt pour éviter chaleur et parking saturé ; l’intérêt est le contraste falaises / mer tout en gardant le camping-car immobile à Évisa.',
       metrics: [
         { label: "Route", value: "~95 km" },
         { label: "Conduite", value: "~2 h 40" },
@@ -292,6 +295,7 @@ window.CORSE2026 = {
       tags: ["bateau", "à réserver", "porto"],
       summary: "Descente matinale à Porto, circuit bateau Scandola + Girolata, après-midi légère.",
       enrich: "Choisir un bateau à taille humaine si possible. Places ombragées, coupe-vent et anti-mal des transports selon avis pharma.",
+      why: 'La sortie « wow » du secteur Porto : Scandola et Girolata vus depuis la mer, inaccessibles autrement. Le matin est cadré (bateau), l’après-midi reste légère pour digérer la journée sans ajouter de conduite inutile.',
       metrics: [
         { label: "Route", value: "~45 km" },
         { label: "Bateau", value: "3–3 h 30" },
@@ -333,6 +337,7 @@ window.CORSE2026 = {
       tags: ["marche", "rivière", "préparation"],
       summary: "Boucle des châtaigniers, retour Aïtone, puis Spelunca jusqu'au pont de Zaglia. Préparer le départ du 8.",
       enrich: "Journée « dernière montagne » : faire le plein, charger l'eau, vider, placer la voiture prête. Aucun dîner tardif.",
+      why: 'Dernière journée montagne avant Corte : marches familiales (châtaigniers, Aïtone, Spelunca jusqu’au pont). L’intérêt est de profiter du secteur tout en préparant le départ critique du 8 — plein, rangement, appel chez Bartho.',
       metrics: [
         { label: "Marche", value: "~3 h" },
         { label: "Conduite", value: "~1 h 45" },
@@ -374,6 +379,7 @@ window.CORSE2026 = {
       tags: ["transfert", "critique", "sans résa"],
       summary: "Départ 7 h 15 via Vergio. Arrivée cible 9 h 30 chez Bartho. Installation puis Corte à pied.",
       enrich: "Aucune course ni vraie visite avant d'avoir obtenu l'emplacement. Si complet : activer immédiatement les replis Corte.",
+      why: 'Journée prioritaire du séjour : arriver tôt chez Bartho (sans réservation). La route par Vergio est un transfert stratégique, pas une visite. Une fois l’emplacement obtenu, Corte et le Tavignano servent uniquement à décompresser.',
       metrics: [
         { label: "Route", value: "~66 km" },
         { label: "Conduite", value: "~1 h 45" },
@@ -417,6 +423,7 @@ window.CORSE2026 = {
       tags: ["marche", "rivière", "flexible"],
       summary: "Restonica seulement si accès / navette officiellement ouverts. Sinon Tavignano depuis le camping.",
       enrich: "Avec 5 et 8 ans : viser la vallée et la rivière, pas les lacs Melo/Capitello (trop longs).",
+      why: 'Journée flexible autour de l’eau : Restonica si l’accès est officiellement ouvert, sinon Tavignano depuis le camping. L’intérêt est une marche adaptée aux enfants, sans objectif de sommet, avec baignade sûre et repos l’après-midi.',
       metrics: [
         { label: "Marche", value: "2–3 h" },
         { label: "Niveau", value: "Familial" },
@@ -458,6 +465,7 @@ window.CORSE2026 = {
       tags: ["marche", "forêt", "ombre"],
       summary: "Forêt de Vizzavona, cascade des Anglais en famille. Verghellu optionnel si énergie et accès OK.",
       enrich: "Garder cette journée plus légère que Bonifacio / Roccapina à venir. Ombre forestière = alliée contre la chaleur.",
+      why: 'Sortie forêt pour casser la chaleur : Vizzavona et la cascade des Anglais offrent ombre et rythme doux. Verghellu n’est qu’une option. On garde volontairement plus léger que Bonifacio ou Roccapina à venir.',
       metrics: [
         { label: "Route", value: "~95 km" },
         { label: "Conduite", value: "~2 h 20" },
@@ -498,6 +506,7 @@ window.CORSE2026 = {
       tags: ["transfert", "plage", "camping-car"],
       summary: "Transfert ~145 km vers Olmeto-Plage. Installation pour 5 nuits, après-midi plage sans voiture.",
       enrich: "Boulanger livre le camping le matin. Objectif : être installé avant le déjeuner, aucune visite en cours de route.",
+      why: 'Changement de décor : quitter l’intérieur pour la base mer d’Abbartello. L’intérêt du jour est uniquement le transfert propre et l’installation pour cinq nuits, puis la plage à pied — aucune visite en cours de route.',
       metrics: [
         { label: "Route", value: "~145 km" },
         { label: "Conduite", value: "~2 h 45" },
@@ -539,6 +548,7 @@ window.CORSE2026 = {
       tags: ["visite", "plage", "doux"],
       summary: "Site préhistorique de Filitosa le matin au frais, longue après-midi à Cupabia.",
       enrich: "Filitosa se combine parfaitement avec Cupabia : visite courte + grosse baignade. Rythme idéal après le transfert.",
+      why: 'Combo culture + mer à proximité : Filitosa le matin au frais, Cupabia l’après-midi. Programme idéal après un transfert, avec peu de kilomètres et un vrai temps de baignade pour les enfants.',
       metrics: [
         { label: "Route", value: "~55 km" },
         { label: "Visite", value: "~2 h" },
@@ -579,6 +589,7 @@ window.CORSE2026 = {
       tags: ["ville", "bateau optionnel", "départ tôt"],
       summary: "Départ 7 h. Port, citadelle, option bateau falaises. Retour sans activité supplémentaire.",
       enrich: "Seule vraie grande journée urbaine du séjour. Escalier du Roy d'Aragon = optionnel selon chaleur, vertige et énergie des enfants.",
+      why: 'Grande journée sud : Bonifacio concentre port, citadelle et option bateau falaises. On accepte une longue conduite A/R une seule fois ; le reste du séjour sud reste plus local pour compenser.',
       metrics: [
         { label: "Route", value: "~180 km" },
         { label: "Conduite", value: "~3 h 10" },
@@ -622,6 +633,7 @@ window.CORSE2026 = {
       tags: ["plage", "marche légère", "côte"],
       summary: "Tour génoise le matin au frais, longue plage l'après-midi à Campomoro.",
       enrich: "Journée tampon idéale après Bonifacio : marche courte + baignade longue. Respecter strictement les sentiers ouverts.",
+      why: 'Journée tampon après Bonifacio : marche courte à la tour de Campomoro le matin, longue plage ensuite. L’intérêt est de récupérer sans s’ennuyer, tout en restant sur la côte proche d’Abbartello.',
       metrics: [
         { label: "Route", value: "~80 km" },
         { label: "Marche", value: "1 h 30–2 h" },
@@ -662,6 +674,7 @@ window.CORSE2026 = {
       tags: ["plage", "village", "15 août"],
       summary: "Départ tôt pour Roccapina avant l'affluence du 15 août, puis Sartène pour déjeuner et balade.",
       enrich: "Préparer dès le retour le départ du 16 : niveaux, déchets, linge, eau, documents, carburant, adresse restitution.",
+      why: 'Dernière sortie « paysage » : Roccapina pour le site, Sartène pour le village et le déjeuner. Le 15 août impose un départ tôt ; le soir sert surtout à préparer la restitution du camping-car.',
       metrics: [
         { label: "Route", value: "~145 km" },
         { label: "Conduite", value: "~2 h 50" },
@@ -704,6 +717,7 @@ window.CORSE2026 = {
       tags: ["transfert", "restitution", "critique"],
       summary: "Check-out, route vers Ajaccio, carburant, restitution cible 12 h avec 2 h de marge.",
       enrich: "Viser midi, pas 13 h 45. Documents, clés et photos restent accessibles — jamais dans une valise déjà chargée.",
+      why: 'Journée purement opérationnelle : check-out, route vers Ajaccio, carburant et restitution avec deux heures de marge. Aucun tourisme programmé — l’intérêt est d’éviter le stress de dernière minute.',
       metrics: [
         { label: "Route", value: "~85 km" },
         { label: "Conduite", value: "~1 h 50" },

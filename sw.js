@@ -1,14 +1,14 @@
-const CACHE = "corse2026-v4";
+const CACHE = "corse2026-v5";
 const ASSETS = [
   "./",
   "./index.html",
   "./assets/styles.css",
   "./assets/app.js",
+  "./assets/vendor/leaflet.js",
+  "./assets/vendor/leaflet.css",
   "./data/trip.js",
   "./manifest.webmanifest",
   "./icons/icon.svg",
-  "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
-  "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
 ];
 
 self.addEventListener("install", (event) => {
