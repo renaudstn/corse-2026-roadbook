@@ -241,7 +241,6 @@
     $("#todayLink").href = "#programme";
   }
 
-  jumpToday?.classList.remove("is-dim");
   jumpToday?.addEventListener("click", () => {
     selectDay(programmeTarget.id);
   });

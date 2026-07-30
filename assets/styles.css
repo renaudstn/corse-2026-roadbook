@@ -93,19 +93,17 @@ a.btn {
   top: 0.75rem;
 }
 
-/* Bottom controls — liquid glass */
+/* Bottom menu — liquid glass (burger only, sticky) */
 .bottombar {
   position: fixed;
-  left: 50%;
+  left: max(0.85rem, env(safe-area-inset-left, 0px));
   bottom: calc(0.65rem + env(safe-area-inset-bottom, 0px));
-  transform: translateX(-50%);
   z-index: 40;
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  padding: 0.45rem;
-  width: min(22rem, calc(100% - 1.25rem));
-  border-radius: 1.35rem;
+  padding: 0.4rem;
+  width: auto;
+  border-radius: 1.2rem;
   background: rgba(6, 18, 16, 0.52);
   border: 1px solid rgba(255, 255, 255, 0.32);
   box-shadow: 0 10px 32px rgba(0, 0, 0, 0.28);
@@ -158,35 +156,6 @@ a.btn {
 
 .bottombar.is-solid .icon-btn span {
   background: var(--ink);
-}
-
-.chip {
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.24);
-  border-radius: 999px;
-  padding: 0.7rem 1rem;
-  font-size: 0.88rem;
-  font-weight: 700;
-  cursor: pointer;
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-  flex: 1;
-  text-align: center;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-.bottombar.is-solid .chip {
-  background: var(--brand);
-  border-color: transparent;
-  color: #f4faf8;
-  backdrop-filter: none;
-}
-
-.chip--today.is-dim {
-  opacity: 0.4;
-  pointer-events: none;
 }
 
 /* Keep unused brand mark styles for drawers if needed */
@@ -1803,7 +1772,7 @@ a.btn {
 /* Desktop refinements */
 @media (min-width: 960px) {
   .bottombar {
-    width: min(24rem, calc(100% - 2rem));
+    left: max(1.25rem, env(safe-area-inset-left, 0px));
   }
 
   .drawer {
