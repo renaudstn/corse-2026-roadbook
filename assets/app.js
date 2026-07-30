@@ -123,12 +123,6 @@
   $("#prevDay")?.addEventListener("click", () => goRelative(-1));
   $("#nextDay")?.addEventListener("click", () => goRelative(1));
   $("#daySwitcherLabel")?.addEventListener("click", () => setMenu(true));
-  $("#dockPrev")?.addEventListener("click", () => {
-    goRelative(-1);
-  });
-  $("#dockNext")?.addEventListener("click", () => {
-    goRelative(1);
-  });
 
   document.addEventListener("keydown", (e) => {
     if (e.target.matches("input, textarea, select")) return;
@@ -204,13 +198,29 @@
   });
 
   /* ---------- Maps ---------- */
+  const refreshMap = (map) => {
+    if (!map) return;
+    requestAnimationFrame(() => {
+      map.invalidateSize(true);
+      setTimeout(() => map.invalidateSize(true), 120);
+      setTimeout(() => map.invalidateSize(true), 400);
+    });
+  };
+
   const makeMap = (el, markers, zoom = 10) => {
     if (!window.L || !el || !markers?.length) return null;
     const pts = markers.map((id) => place(id)).filter(Boolean);
     if (!pts.length) return null;
 
-    const map = L.map(el, { scrollWheelZoom: false, attributionControl: true });
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    // Ensure container has size before init
+    el.style.minHeight = el.classList.contains("map--overview") ? "240px" : "220px";
+
+    const map = L.map(el, {
+      scrollWheelZoom: false,
+      attributionControl: true,
+      tapTolerance: 20,
+    });
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 18,
       attribution: "&copy; OpenStreetMap",
     }).addTo(map);
@@ -218,28 +228,42 @@
     const latLngs = pts.map((p) => [p.lat, p.lng]);
     pts.forEach((p) => {
       L.circleMarker([p.lat, p.lng], {
-        radius: 8,
-        color: "#0e3a36",
+        radius: 7,
+        color: "#1a3d38",
         weight: 2,
-        fillColor: "#c9a66b",
-        fillOpacity: 0.95,
+        fillColor: "#c4a574",
+        fillOpacity: 1,
       })
         .bindPopup(`<strong>${p.name}</strong>`)
         .addTo(map);
     });
 
     if (latLngs.length === 1) map.setView(latLngs[0], zoom);
-    else map.fitBounds(latLngs, { padding: [28, 28], maxZoom: zoom });
+    else map.fitBounds(latLngs, { padding: [32, 32], maxZoom: Math.min(zoom, 12) });
 
-    setTimeout(() => map.invalidateSize(), 80);
+    refreshMap(map);
+
+    // Re-layout when the map enters viewport (fixes blank tiles)
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) refreshMap(map);
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(el);
+
     return map;
   };
 
   const initOverviewMap = () => {
     const el = $("#overviewMap");
-    if (!el || !window.L || overviewMap) return;
+    if (!el || !window.L) return;
+    if (overviewMap) {
+      refreshMap(overviewMap);
+      return;
+    }
     overviewMap = L.map(el, { scrollWheelZoom: false });
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 18,
       attribution: "&copy; OpenStreetMap",
     }).addTo(overviewMap);
@@ -249,19 +273,19 @@
       if (b.lat == null) return;
       latLngs.push([b.lat, b.lng]);
       L.circleMarker([b.lat, b.lng], {
-        radius: 9,
+        radius: 8,
         color: b.color,
         weight: 2,
         fillColor: b.color,
-        fillOpacity: 0.85,
+        fillOpacity: 0.9,
       })
         .bindPopup(
           `<strong>${b.name}</strong><br>${b.dates}<br><em>${b.statusLabel}</em>`
         )
         .addTo(overviewMap);
     });
-    if (latLngs.length) overviewMap.fitBounds(latLngs, { padding: [36, 36] });
-    setTimeout(() => overviewMap.invalidateSize(), 100);
+    if (latLngs.length) overviewMap.fitBounds(latLngs, { padding: [40, 40] });
+    refreshMap(overviewMap);
   };
 
   /* ---------- Days UI ---------- */
@@ -281,8 +305,6 @@
     $("#switchTitle").textContent = day.short;
     $("#prevDay").disabled = i <= 0;
     $("#nextDay").disabled = i >= DATA.days.length - 1;
-    $("#dockPrev").disabled = i <= 0;
-    $("#dockNext").disabled = i >= DATA.days.length - 1;
   };
 
   const updateDrawerActive = () => {
@@ -349,6 +371,15 @@
             <em class="intensity__label">${intensityLabel(day.intensity)}</em>
           </div>
         </div>
+
+        ${
+          day.why
+            ? `<div class="why-block">
+                <h4>Pourquoi ce programme</h4>
+                <p>${day.why}</p>
+              </div>`
+            : ""
+        }
 
         <div class="metrics">
           ${day.metrics
@@ -500,7 +531,7 @@
         scrollWheelZoom: false,
         doubleClickZoom: false,
       }).setView([b.lat, b.lng], 12);
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 16 }).addTo(m);
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 16 }).addTo(m);
       L.circleMarker([b.lat, b.lng], {
         radius: 7,
         color: b.color,
@@ -508,7 +539,7 @@
         fillOpacity: 0.9,
         weight: 2,
       }).addTo(m);
-      setTimeout(() => m.invalidateSize(), 120);
+      refreshMap(m);
     });
   };
 
@@ -579,8 +610,8 @@
     .filter(Boolean);
 
   const setActiveNav = (id) => {
-    $$("[data-nav], [data-dock]").forEach((el) => {
-      const key = el.getAttribute("data-nav") || el.getAttribute("data-dock");
+    $$("[data-nav]").forEach((el) => {
+      const key = el.getAttribute("data-nav");
       const map = {
         home: "accueil",
         days: "programme",

@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="./assets/vendor/leaflet.css" />
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body>
@@ -157,15 +157,6 @@
     </section>
   </main>
 
-  <nav class="dock" aria-label="Navigation rapide">
-    <button type="button" class="dock__prev" id="dockPrev" aria-label="Jour précédent">‹</button>
-    <a href="#accueil" data-dock="home"><span>Maison</span></a>
-    <a href="#programme" data-dock="days"><span>Jours</span></a>
-    <a href="#bases" data-dock="bases"><span>Bases</span></a>
-    <a href="#contacts" data-dock="contacts"><span>Appels</span></a>
-    <button type="button" class="dock__next" id="dockNext" aria-label="Jour suivant">›</button>
-  </nav>
-
   <div class="tip-layer" id="tipLayer" hidden>
     <div class="tip-card" role="dialog" aria-modal="true" aria-labelledby="tipTitle">
       <button class="tip-card__close" id="tipClose" type="button" aria-label="Fermer">×</button>
@@ -179,7 +170,7 @@
     <p>Plan de voyage familial · infos au 30 juillet 2026 · pas une source temps réel.</p>
   </footer>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZsSAVjm7MjhQMKIndrUxMjAxzY=" crossorigin=""></script>
+  <script src="./assets/vendor/leaflet.js"></script>
   <script src="./data/trip.js"></script>
   <script src="./assets/app.js"></script>
 </body>
