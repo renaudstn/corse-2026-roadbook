@@ -1,0 +1,15 @@
+/*  Corse 2026 Roadbook — GitHub Pages  */
+/*  Serve as static site from repo root  */
+
+# Cache static assets briefly; HTML always revalidated
+/*.html
+  Cache-Control: max-age=0, must-revalidate
+
+/assets/*
+  Cache-Control: max-age=3600
+
+/data/*
+  Cache-Control: max-age=3600
+
+/sw.js
+  Cache-Control: max-age=0, must-revalidate

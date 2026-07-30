@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0e3a36" />
+  <meta name="description" content="Roadbook familial Corse 2026 — programme jour par jour du 3 au 16 août." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Corse 2026 · Roadbook</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./icons/apple-touch.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Aller au contenu</a>
+
+  <header class="topbar" id="topbar">
+    <div class="topbar__inner">
+      <button class="icon-btn" id="menuBtn" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="drawer">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="brand">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <div>
+          <p class="brand__name">Corse 2026</p>
+          <p class="brand__sub" id="brandSub">Roadbook familial</p>
+        </div>
+      </div>
+      <nav class="topnav" aria-label="Navigation principale">
+        <a href="#accueil" data-nav="home">Accueil</a>
+        <a href="#programme" data-nav="days">Programme</a>
+        <a href="#bases" data-nav="bases">Campings</a>
+        <a href="#checklist" data-nav="check">Check-list</a>
+        <a href="#logistique" data-nav="logistics">Logistique</a>
+        <a href="#contacts" data-nav="contacts">Contacts</a>
+      </nav>
+      <button class="chip chip--today" id="jumpToday" type="button">Aujourd'hui</button>
+    </div>
+  </header>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <nav class="drawer__nav" aria-label="Menu mobile">
+      <a href="#accueil" data-nav="home">Accueil</a>
+      <a href="#programme" data-nav="days">Programme</a>
+      <a href="#bases" data-nav="bases">Campings</a>
+      <a href="#checklist" data-nav="check">Check-list</a>
+      <a href="#logistique" data-nav="logistics">Logistique</a>
+      <a href="#contacts" data-nav="contacts">Contacts</a>
+    </nav>
+    <p class="drawer__note">Fonctionne hors ligne après la 1<sup>re</sup> ouverture.</p>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <main id="main">
+    <section class="hero" id="accueil">
+      <div class="hero__atmosphere" aria-hidden="true"></div>
+      <div class="hero__content">
+        <p class="hero__kicker">3 → 16 août 2026</p>
+        <h1 class="hero__title">Corse 2026</h1>
+        <p class="hero__lead">Roadbook familial · nature, peu de villes, camping-car peu déplacé.</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#programme" id="ctaProgramme">Voir le programme</a>
+          <a class="btn btn--ghost" href="#bases">Les bases</a>
+        </div>
+      </div>
+      <div class="hero__ribbon" id="todayRibbon" hidden>
+        <div>
+          <p class="eyebrow">Aujourd'hui</p>
+          <p class="today-title" id="todayTitle"></p>
+        </div>
+        <a class="btn btn--small" id="todayLink" href="#programme">Ouvrir</a>
+      </div>
+    </section>
+
+    <section class="panel" id="overview">
+      <div class="section-head">
+        <h2>Le séjour en un regard</h2>
+        <p>14 jours · 13 nuits · 3 bases · 1 camping-car + 1 voiture</p>
+      </div>
+      <div class="stat-row" id="statRow"></div>
+      <div class="route-strip" id="routeStrip" aria-label="Bases du séjour"></div>
+      <div class="rules" id="rules"></div>
+    </section>
+
+    <section class="panel panel--flush" id="programme">
+      <div class="section-head section-head--pad">
+        <h2>Programme jour par jour</h2>
+        <p>Horaires indicatifs — à ajuster selon météo, circulation et énergie des enfants.</p>
+      </div>
+      <div class="day-rail" id="dayRail" role="tablist" aria-label="Jours du séjour"></div>
+      <div class="day-stage" id="dayStage"></div>
+    </section>
+
+    <section class="panel" id="bases">
+      <div class="section-head">
+        <h2>Campings & bases</h2>
+        <p>Dates et campings inchangés · détails pratiques pour le terrain.</p>
+      </div>
+      <div class="base-grid" id="baseGrid"></div>
+    </section>
+
+    <section class="panel" id="checklist">
+      <div class="section-head">
+        <h2>Check-list avant le départ</h2>
+        <p>Cochée ici, sauvegardée sur cet appareil.</p>
+      </div>
+      <ul class="check-list" id="checkList"></ul>
+      <button class="btn btn--ghost btn--small" id="resetCheck" type="button">Réinitialiser</button>
+    </section>
+
+    <section class="panel" id="logistique">
+      <div class="section-head">
+        <h2>Logistique</h2>
+        <p>Carburant, courses, enfants, chaleur.</p>
+      </div>
+      <div class="log-grid" id="logGrid"></div>
+    </section>
+
+    <section class="panel" id="contacts">
+      <div class="section-head">
+        <h2>Contacts utiles</h2>
+        <p>À enregistrer aussi dans les deux téléphones.</p>
+      </div>
+      <div class="contact-grid" id="contactGrid"></div>
+      <a class="emergency" href="tel:112">
+        <span>Urgences</span>
+        <strong>112</strong>
+      </a>
+    </section>
+  </main>
+
+  <nav class="dock" aria-label="Navigation rapide">
+    <a href="#accueil" data-dock="home"><span>Maison</span></a>
+    <a href="#programme" data-dock="days"><span>Jours</span></a>
+    <a href="#bases" data-dock="bases"><span>Bases</span></a>
+    <a href="#checklist" data-dock="check"><span>Liste</span></a>
+    <a href="#contacts" data-dock="contacts"><span>Appels</span></a>
+  </nav>
+
+  <footer class="footer">
+    <p>Plan de voyage familial · infos au 30 juillet 2026 · pas une source temps réel.</p>
+  </footer>
+
+  <script src="./data/trip.js"></script>
+  <script src="./assets/app.js"></script>
+</body>
+</html>
