@@ -817,9 +817,10 @@
   updateSwitcher();
   updateDrawerActive();
 
-  /* Hero wow: entrance + parallax */
+  /* Hero wow: entrance + parallax + glass bottom bar */
   const hero = $("#accueil");
   const heroParallax = $("#heroParallax");
+  const bottombar = $(".bottombar");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   requestAnimationFrame(() => hero?.classList.add("is-ready"));
@@ -831,6 +832,10 @@
     const progress = Math.min(1, Math.max(0, -rect.top / (h * 0.75)));
     hero.style.setProperty("--hero-progress", progress.toFixed(3));
     hero.classList.toggle("is-leaving", progress > 0.02);
+
+    // Transparent glass on hero → frosted when leaving the photo
+    const onHero = rect.bottom > window.innerHeight * 0.55;
+    bottombar?.classList.toggle("is-solid", !onHero);
 
     if (!reduceMotion && heroParallax) {
       if (progress > 0.01) {

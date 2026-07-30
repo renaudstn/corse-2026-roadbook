@@ -41,6 +41,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+  height: -webkit-fill-available;
 }
 
 body {
@@ -52,6 +53,7 @@ body {
     radial-gradient(700px 360px at -10% 20%, rgba(31, 92, 84, 0.1), transparent 50%),
     linear-gradient(180deg, #e7ebe6 0%, var(--bg) 24%, #f4f5f2 100%);
   min-height: 100dvh;
+  min-height: -webkit-fill-available;
   line-height: 1.55;
   padding-bottom: calc(var(--bottombar) + 1.5rem);
   -webkit-font-smoothing: antialiased;
@@ -87,11 +89,11 @@ a.btn {
   top: 0.75rem;
 }
 
-/* Bottom controls */
+/* Bottom controls — liquid glass */
 .bottombar {
   position: fixed;
   left: 50%;
-  bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  bottom: calc(0.65rem + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
   z-index: 40;
   display: flex;
@@ -99,38 +101,63 @@ a.btn {
   gap: 0.55rem;
   padding: 0.45rem;
   width: min(22rem, calc(100% - 1.25rem));
-  border-radius: 1.25rem;
-  background: rgba(247, 248, 245, 0.92);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(14px) saturate(1.05);
+  border-radius: 1.35rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: none;
+  backdrop-filter: blur(10px) saturate(1.15);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
+  transition:
+    background 0.35s var(--ease),
+    border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    backdrop-filter 0.35s ease;
+}
+
+.bottombar.is-solid {
+  background: rgba(247, 248, 245, 0.72);
+  border-color: rgba(16, 25, 22, 0.12);
+  box-shadow: 0 10px 36px rgba(16, 25, 22, 0.12);
+  backdrop-filter: blur(18px) saturate(1.25);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
 }
 
 .icon-btn {
   width: 2.6rem;
   height: 2.6rem;
-  border: 1px solid var(--line);
-  border-radius: 0.9rem;
-  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 0.95rem;
+  background: rgba(255, 255, 255, 0.14);
   display: grid;
   place-content: center;
   gap: 4px;
   cursor: pointer;
   padding: 0;
   flex-shrink: 0;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .icon-btn span {
   display: block;
   width: 1rem;
   height: 1.5px;
-  background: var(--ink);
+  background: #f4faf8;
   border-radius: 2px;
+  transition: background 0.3s ease;
+}
+
+.bottombar.is-solid .icon-btn {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: var(--line);
+}
+
+.bottombar.is-solid .icon-btn span {
+  background: var(--ink);
 }
 
 .chip {
-  border: 1px solid transparent;
-  background: var(--brand);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.18);
   border-radius: 999px;
   padding: 0.7rem 1rem;
   font-size: 0.88rem;
@@ -139,6 +166,16 @@ a.btn {
   color: #f4faf8;
   flex: 1;
   text-align: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.bottombar.is-solid .chip {
+  background: var(--brand);
+  border-color: transparent;
+  color: #f4faf8;
+  backdrop-filter: none;
 }
 
 .chip--today.is-dim {
@@ -157,8 +194,10 @@ a.btn {
 /* ---------- HERO WOW ---------- */
 .hero {
   position: relative;
-  min-height: 100dvh;
   min-height: 100svh;
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+  height: 100dvh;
   display: grid;
   align-content: end;
   overflow: clip;
@@ -174,7 +213,8 @@ a.btn {
 
 .hero__parallax {
   position: absolute;
-  inset: -12% 0;
+  /* Extra bleed so parallax never shows gaps at edges */
+  inset: -14% 0 -8%;
   will-change: transform;
   transform: translate3d(0, 0, 0) scale(1.08);
 }
@@ -209,7 +249,10 @@ a.btn {
   max-width: var(--max);
   width: 100%;
   margin: 0 auto;
-  padding: max(2.5rem, calc(env(safe-area-inset-top, 0px) + 1.75rem)) var(--pad) 5.5rem;
+  padding:
+    max(2.5rem, calc(env(safe-area-inset-top, 0px) + 1.75rem))
+    var(--pad)
+    calc(5.75rem + env(safe-area-inset-bottom, 0px));
 }
 
 .hero__kicker {
@@ -262,7 +305,7 @@ a.btn {
 .hero__scroll {
   position: absolute;
   left: 50%;
-  bottom: 1.25rem;
+  bottom: calc(4.85rem + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
   z-index: 2;
   display: inline-flex;
