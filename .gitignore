@@ -1,0 +1,5 @@
+# Corse 2026 — no build step
+*.DS_Store
+node_modules/
+.vercel
+.cache/
