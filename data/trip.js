@@ -107,6 +107,10 @@ window.CORSE2026 = {
 
   logistics: [
     {
+      title: "Temps de route",
+      text: "Horaires en mode voiture / camping-car (pas vélo !). En Corse, compter large en août : pauses et croisements non inclus sauf mention.",
+    },
+    {
       title: "Carburant",
       text: "Plein avant la montée vers Évisa et le 7 août avant Corte. Le 15 au soir, préparer la station de restitution du 16.",
     },
