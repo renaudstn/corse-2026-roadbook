@@ -112,7 +112,15 @@
   const goRelative = (delta) => {
     const i = dayIndex(selectedId);
     const next = DATA.days[i + delta];
-    if (next) selectDay(next.id);
+    if (!next) return;
+    const stageEl = $("#dayStage");
+    if (stageEl) {
+      stageEl.classList.remove("is-swipe-left", "is-swipe-right");
+      // force reflow for retrigger
+      void stageEl.offsetWidth;
+      stageEl.classList.add(delta > 0 ? "is-swipe-left" : "is-swipe-right");
+    }
+    selectDay(next.id, { scroll: false });
   };
 
   document.addEventListener("click", (e) => {
@@ -123,6 +131,48 @@
   $("#prevDay")?.addEventListener("click", () => goRelative(-1));
   $("#nextDay")?.addEventListener("click", () => goRelative(1));
   $("#daySwitcherLabel")?.addEventListener("click", () => setMenu(true));
+
+  /* Swipe between days (horizontal) */
+  const bindDaySwipe = (el) => {
+    if (!el) return;
+    let startX = 0;
+    let startY = 0;
+    let tracking = false;
+
+    el.addEventListener(
+      "touchstart",
+      (e) => {
+        if (e.target.closest(".map, .leaflet-container, a, button, input, label")) {
+          tracking = false;
+          return;
+        }
+        const t = e.changedTouches[0];
+        startX = t.clientX;
+        startY = t.clientY;
+        tracking = true;
+      },
+      { passive: true }
+    );
+
+    el.addEventListener(
+      "touchend",
+      (e) => {
+        if (!tracking) return;
+        tracking = false;
+        const t = e.changedTouches[0];
+        const dx = t.clientX - startX;
+        const dy = t.clientY - startY;
+        if (Math.abs(dx) < 56) return;
+        if (Math.abs(dx) < Math.abs(dy) * 1.2) return; // vertical scroll wins
+        // swipe left → next day ; swipe right → previous
+        goRelative(dx < 0 ? 1 : -1);
+      },
+      { passive: true }
+    );
+  };
+
+  bindDaySwipe($("#programme"));
+  bindDaySwipe($("#dayStage"));
 
   document.addEventListener("keydown", (e) => {
     if (e.target.matches("input, textarea, select")) return;
