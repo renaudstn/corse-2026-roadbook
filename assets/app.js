@@ -207,12 +207,63 @@
     });
   };
 
+  const markerIcon = (num, label) =>
+    L.divIcon({
+      className: "pin",
+      html: `<div class="pin__wrap" title="${escapeAttr(label)}">
+        <span class="pin__badge">${num}</span>
+        <span class="pin__label">${escapeAttr(label)}</span>
+      </div>`,
+      iconSize: [120, 36],
+      iconAnchor: [14, 18],
+    });
+
+  const addNumberedMarkers = (map, pts) => {
+    const latLngs = pts.map((p) => [p.lat, p.lng]);
+    pts.forEach((p, i) => {
+      L.marker([p.lat, p.lng], { icon: markerIcon(i + 1, p.name), zIndexOffset: 100 + i })
+        .bindPopup(`<strong>${i + 1}. ${p.name}</strong>`)
+        .addTo(map);
+    });
+    return latLngs;
+  };
+
+  const drawStraightRoute = (map, latLngs) => {
+    if (latLngs.length < 2) return null;
+    return L.polyline(latLngs, {
+      color: "#163f39",
+      weight: 3.5,
+      opacity: 0.85,
+      dashArray: null,
+      lineJoin: "round",
+    }).addTo(map);
+  };
+
+  const fetchRoadRoute = async (pts) => {
+    if (pts.length < 2) return null;
+    const coords = pts.map((p) => `${p.lng},${p.lat}`).join(";");
+    const url = `https://router.project-osrm.org/route/v1/driving/${coords}?overview=full&geometries=geojson&steps=false`;
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 8000);
+    try {
+      const res = await fetch(url, { signal: ctrl.signal });
+      if (!res.ok) return null;
+      const data = await res.json();
+      const geom = data?.routes?.[0]?.geometry?.coordinates;
+      if (!geom?.length) return null;
+      return geom.map(([lng, lat]) => [lat, lng]);
+    } catch {
+      return null;
+    } finally {
+      clearTimeout(timer);
+    }
+  };
+
   const makeMap = (el, markers, zoom = 10) => {
     if (!window.L || !el || !markers?.length) return null;
     const pts = markers.map((id) => place(id)).filter(Boolean);
     if (!pts.length) return null;
 
-    // Ensure container has size before init
     el.style.minHeight = el.classList.contains("map--overview") ? "240px" : "220px";
 
     const map = L.map(el, {
@@ -225,25 +276,30 @@
       attribution: "&copy; OpenStreetMap",
     }).addTo(map);
 
-    const latLngs = pts.map((p) => [p.lat, p.lng]);
-    pts.forEach((p) => {
-      L.circleMarker([p.lat, p.lng], {
-        radius: 7,
-        color: "#1a3d38",
-        weight: 2,
-        fillColor: "#c4a574",
-        fillOpacity: 1,
-      })
-        .bindPopup(`<strong>${p.name}</strong>`)
-        .addTo(map);
-    });
+    const latLngs = addNumberedMarkers(map, pts);
+    let routeLine = drawStraightRoute(map, latLngs);
 
     if (latLngs.length === 1) map.setView(latLngs[0], zoom);
-    else map.fitBounds(latLngs, { padding: [32, 32], maxZoom: Math.min(zoom, 12) });
+    else map.fitBounds(latLngs, { padding: [48, 48], maxZoom: Math.min(zoom, 12) });
 
     refreshMap(map);
 
-    // Re-layout when the map enters viewport (fixes blank tiles)
+    // Upgrade to real road geometry when online
+    if (pts.length >= 2) {
+      fetchRoadRoute(pts).then((road) => {
+        if (!road?.length || !map) return;
+        if (routeLine) map.removeLayer(routeLine);
+        routeLine = L.polyline(road, {
+          color: "#163f39",
+          weight: 4,
+          opacity: 0.9,
+          lineJoin: "round",
+        }).addTo(map);
+        map.fitBounds(routeLine.getBounds(), { padding: [40, 40], maxZoom: Math.min(zoom, 12) });
+        refreshMap(map);
+      });
+    }
+
     const io = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) refreshMap(map);
@@ -268,24 +324,54 @@
       attribution: "&copy; OpenStreetMap",
     }).addTo(overviewMap);
 
-    const latLngs = [];
-    DATA.bases.forEach((b) => {
-      if (b.lat == null) return;
-      latLngs.push([b.lat, b.lng]);
-      L.circleMarker([b.lat, b.lng], {
-        radius: 8,
-        color: b.color,
-        weight: 2,
-        fillColor: b.color,
-        fillOpacity: 0.9,
+    const ordered = DATA.bases.filter((b) => b.lat != null);
+    const pts = ordered.map((b) => ({ name: b.name, lat: b.lat, lng: b.lng, color: b.color }));
+    const latLngs = pts.map((p) => [p.lat, p.lng]);
+
+    pts.forEach((p, i) => {
+      L.marker([p.lat, p.lng], {
+        icon: L.divIcon({
+          className: "pin",
+          html: `<div class="pin__wrap pin__wrap--base" style="--pin:${p.color}">
+            <span class="pin__badge">${i + 1}</span>
+            <span class="pin__label">${escapeAttr(p.name)}</span>
+          </div>`,
+          iconSize: [140, 36],
+          iconAnchor: [14, 18],
+        }),
+        zIndexOffset: 100 + i,
       })
         .bindPopup(
-          `<strong>${b.name}</strong><br>${b.dates}<br><em>${b.statusLabel}</em>`
+          `<strong>${i + 1}. ${p.name}</strong><br>${ordered[i].dates}<br><em>${ordered[i].statusLabel}</em>`
         )
         .addTo(overviewMap);
     });
-    if (latLngs.length) overviewMap.fitBounds(latLngs, { padding: [40, 40] });
+
+    let routeLine = drawStraightRoute(overviewMap, latLngs);
+    if (latLngs.length) overviewMap.fitBounds(latLngs, { padding: [48, 48] });
     refreshMap(overviewMap);
+
+    fetchRoadRoute(pts).then((road) => {
+      if (!road?.length || !overviewMap) return;
+      if (routeLine) overviewMap.removeLayer(routeLine);
+      routeLine = L.polyline(road, {
+        color: "#163f39",
+        weight: 4,
+        opacity: 0.85,
+      }).addTo(overviewMap);
+      overviewMap.fitBounds(routeLine.getBounds(), { padding: [40, 40] });
+      refreshMap(overviewMap);
+    });
+
+    const legend = $("#overviewLegend");
+    if (legend) {
+      legend.innerHTML = ordered
+        .map(
+          (b, i) =>
+            `<li><span class="map-legend__n" style="background:${b.color}">${i + 1}</span><span>${b.name}${b.place ? ` · ${b.place}` : ""} <em>${b.dates}</em></span></li>`
+        )
+        .join("");
+    }
   };
 
   /* ---------- Days UI ---------- */
@@ -418,10 +504,21 @@
             }
           </div>
           <div id="dayMap" class="map map--day"></div>
-          <p class="map-caption">${(day.mapMarkers || [])
-            .map((id) => place(id)?.name)
-            .filter(Boolean)
-            .join(" · ")}</p>
+          <ol class="map-legend">
+            ${(day.mapMarkers || [])
+              .map((id, i) => {
+                const p = place(id);
+                return p
+                  ? `<li><span class="map-legend__n">${i + 1}</span><span>${p.name}</span></li>`
+                  : "";
+              })
+              .join("")}
+          </ol>
+          <p class="map-caption">${
+            (day.mapMarkers || []).length > 1
+              ? "Trajet dans l’ordre numéroté · trait = itinéraire routier"
+              : "Point du jour"
+          }</p>
         </div>
 
         <div class="day-section-head">
@@ -532,12 +629,16 @@
         doubleClickZoom: false,
       }).setView([b.lat, b.lng], 12);
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 16 }).addTo(m);
-      L.circleMarker([b.lat, b.lng], {
-        radius: 7,
-        color: b.color,
-        fillColor: b.color,
-        fillOpacity: 0.9,
-        weight: 2,
+      L.marker([b.lat, b.lng], {
+        icon: L.divIcon({
+          className: "pin",
+          html: `<div class="pin__wrap pin__wrap--mini" style="--pin:${b.color}">
+            <span class="pin__badge">•</span>
+            <span class="pin__label">${escapeAttr(b.name)}</span>
+          </div>`,
+          iconSize: [130, 32],
+          iconAnchor: [12, 16],
+        }),
       }).addTo(m);
       refreshMap(m);
     });
