@@ -165,6 +165,7 @@ a.btn {
   gap: 0.7rem;
   flex: 1;
   min-width: 0;
+  cursor: pointer;
 }
 
 .brand__mark {
@@ -324,6 +325,7 @@ a.btn {
   line-height: 0.88;
   display: grid;
   gap: 0.05em;
+  cursor: pointer;
 }
 
 .hero__title-line,
