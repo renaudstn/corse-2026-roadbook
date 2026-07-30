@@ -18,17 +18,34 @@
   const findToday = () => DATA.days.find((d) => d.date === nowISO) || null;
   const baseById = (id) => DATA.bases.find((b) => b.id === id);
   const place = (id) => DATA.places?.[id];
-  const placeInfoHtml = (p, { short = false } = {}) => {
+  const placeInfoHtml = (p) => {
     if (!p) return "";
     const name = escapeAttr(p.name);
     if (!p.info) return name;
     const label = escapeAttr(p.infoLabel || "Infos");
     const href = escapeAttr(p.info);
-    if (short) {
-      return `<a class="place-link" href="${href}" target="_blank" rel="noopener">${name}</a>`;
-    }
     return `<a class="place-link" href="${href}" target="_blank" rel="noopener">${name}<span class="place-link__src">${label} ↗</span></a>`;
   };
+
+  const placesStripHtml = (markerIds) => {
+    const items = (markerIds || []).map((id) => place(id)).filter((p) => p?.info);
+    if (!items.length) return "";
+    return `<div class="places-strip">
+      <h4>Lieux · infos & photos</h4>
+      <div class="places-strip__list">
+        ${items
+          .map(
+            (p) =>
+              `<a class="place-chip" href="${escapeAttr(p.info)}" target="_blank" rel="noopener">
+                <strong>${escapeAttr(p.name)}</strong>
+                <span>${escapeAttr(p.infoLabel || "Infos")} ↗</span>
+              </a>`
+          )
+          .join("")}
+      </div>
+    </div>`;
+  };
+
   const dayIndex = (id) => DATA.days.findIndex((d) => d.id === id);
 
   // Always land at the very top (ignore restored scroll / leftover hashes)
@@ -562,6 +579,8 @@
                 .join("")}</div>`
             : ""
         }
+
+        ${placesStripHtml(day.mapMarkers)}
 
         <div class="map-block">
           <div class="map-block__head">
