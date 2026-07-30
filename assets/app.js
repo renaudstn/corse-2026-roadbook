@@ -622,6 +622,14 @@
           <p class="lead">${day.summary}</p>
           <div class="day-alt-row">${altLinkHtml}</div>
           ${
+            day.budgetDay
+              ? `<p class="day-cost-chip" title="${escapeAttr(day.budgetDay.note || "")}">
+                  Coût jour ~ <strong>${day.budgetDay.mid} €</strong>
+                  <span>estimation milieu</span>
+                </p>`
+              : ""
+          }
+          ${
             day.intensity != null
               ? `<div class="intensity" aria-label="Intensité ${day.intensity} sur 5">
             <span>Intensité ${tipBtn("Intensité", `Niveau ${day.intensity}/5 — ${intensityLabel(day.intensity)}. Une grosse journée sur deux max.`, "Rythme")}</span>
@@ -853,6 +861,93 @@
     });
   };
 
+  /* ---------- Budget ---------- */
+  const money = (n) =>
+    `${Math.round(n).toLocaleString("fr-FR", { maximumFractionDigits: 0 })} €`;
+
+  const attachDayBudgets = () => {
+    const map = IS_ALT ? DATA._dayCostsAlt : DATA._dayCostsMain;
+    if (!map) return;
+    DATA.days.forEach((d) => {
+      if (map[d.id]) d.budgetDay = map[d.id];
+    });
+  };
+  attachDayBudgets();
+
+  const renderBudget = () => {
+    const root = $("#budgetRoot");
+    const budget = IS_ALT ? DATA.budgetAlt : DATA.budget;
+    if (!root || !budget) return;
+
+    const delta =
+      IS_ALT && budget.vsMain
+        ? `<p class="budget-delta">
+            Écart vs programme principal (milieu) :
+            <strong>${budget.vsMain.mid >= 0 ? "+" : ""}${money(budget.vsMain.mid)}</strong>
+          </p>`
+        : "";
+
+    root.innerHTML = `
+      <div class="budget-hero">
+        <div class="budget-hero__main">
+          <p class="budget-hero__label">Estimation milieu · 14 jours</p>
+          <p class="budget-hero__total">${money(budget.totals.mid)}</p>
+          <p class="budget-hero__range">
+            Fourchette <strong>${money(budget.totals.low)}</strong>
+            → <strong>${money(budget.totals.high)}</strong>
+          </p>
+          <p class="budget-hero__day">~ ${money(budget.perDay.mid)} / jour (milieu)</p>
+          ${delta}
+        </div>
+        <div class="budget-hero__meta">
+          <p><strong>${escapeAttr(budget.party.label)}</strong></p>
+          <p>${escapeAttr(budget.party.vehicles)}</p>
+          <p class="budget-hero__updated">Maj. ${escapeAttr(budget.updated)}</p>
+        </div>
+      </div>
+
+      <div class="budget-cats">
+        ${budget.categories
+          .map(
+            (cat) => `
+          <details class="budget-cat">
+            <summary>
+              <span class="budget-cat__title">${cat.icon || ""} ${escapeAttr(cat.label)}</span>
+              <span class="budget-cat__sum">${money(cat.subtotal.mid)}</span>
+            </summary>
+            <ul class="budget-items">
+              ${cat.items
+                .map(
+                  (it) => `
+                <li class="budget-item${it.optional ? " is-optional" : ""}">
+                  <div class="budget-item__head">
+                    <strong>${escapeAttr(it.label)}</strong>
+                    <span>${money(it.mid)}</span>
+                  </div>
+                  <p>${escapeAttr(it.detail)}</p>
+                  <p class="budget-item__meta">
+                    <span>${money(it.low)} – ${money(it.high)}</span>
+                    <span>${escapeAttr(it.source || "")}</span>
+                    ${it.optional ? "<em>option</em>" : ""}
+                  </p>
+                </li>`
+                )
+                .join("")}
+            </ul>
+          </details>`
+          )
+          .join("")}
+      </div>
+
+      <div class="budget-notes">
+        <h3>Hypothèses</h3>
+        <ul>${budget.assumptions.map((a) => `<li>${escapeAttr(a)}</li>`).join("")}</ul>
+        <h3>Hors budget</h3>
+        <ul>${budget.excluded.map((a) => `<li>${escapeAttr(a)}</li>`).join("")}</ul>
+      </div>`;
+  };
+  renderBudget();
+
   /* ---------- Checklist ---------- */
   let checks = (() => {
     try {
@@ -923,7 +1018,7 @@
   }
 
   /* ---------- Active nav ---------- */
-  const sections = ["accueil", "programme", "bases", "checklist", "logistique", "contacts"]
+  const sections = ["accueil", "intro-alt", "replis-melo", "programme", "budget", "bases", "checklist", "logistique", "contacts"]
     .map((id) => document.getElementById(id))
     .filter(Boolean);
 
@@ -933,6 +1028,7 @@
       const map = {
         home: "accueil",
         days: "programme",
+        budget: "budget",
         bases: "bases",
         check: "checklist",
         logistics: "logistique",

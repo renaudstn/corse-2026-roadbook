@@ -1,4 +1,4 @@
-const CACHE = "corse2026-v20";
+const CACHE = "corse2026-v21";
 const ASSETS = [
   "./",
   "./index.html",
@@ -12,6 +12,7 @@ const ASSETS = [
   "./assets/images/hero-mobile.jpg",
   "./data/trip.js",
   "./data/alt-programme.js",
+  "./data/budget.js",
   "./manifest.webmanifest",
   "./icons/icon.svg",
 ];

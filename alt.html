@@ -29,6 +29,7 @@
       <a href="#intro-alt">Principes</a>
       <a href="#replis-melo">Replis Melo</a>
       <a href="#programme" data-nav="days">Jours</a>
+      <a href="#budget" data-nav="budget">Budget</a>
     </nav>
     <div class="drawer__days">
       <p class="drawer__label">Aller au jour</p>
@@ -78,6 +79,14 @@
       <div class="day-rail" id="dayRail" role="tablist" aria-label="Jours du séjour (variante)"></div>
       <div class="day-stage" id="dayStage"></div>
     </section>
+
+    <section class="panel alt-panel" id="budget">
+      <div class="section-head">
+        <h2>Budget estimé (variante)</h2>
+        <p>Même méthode que le principal · écart carburant / activités signalé.</p>
+      </div>
+      <div id="budgetRoot"></div>
+    </section>
   </main>
 
   <button class="menu-btn" id="menuBtn" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="drawer">
@@ -100,6 +109,7 @@
   <script src="./assets/vendor/leaflet.js"></script>
   <script src="./data/trip.js"></script>
   <script src="./data/alt-programme.js"></script>
+  <script src="./data/budget.js"></script>
   <script src="./assets/alt-boot.js"></script>
   <script src="./assets/app.js"></script>
 </body>
