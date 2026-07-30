@@ -614,6 +614,25 @@ a.btn {
 
 .day-stage {
   padding: 0 var(--pad) 0.5rem;
+  touch-action: pan-y;
+}
+
+.day-stage.is-swipe-left .day-card {
+  animation: swipeInFromRight 0.28s var(--ease) both;
+}
+
+.day-stage.is-swipe-right .day-card {
+  animation: swipeInFromLeft 0.28s var(--ease) both;
+}
+
+@keyframes swipeInFromRight {
+  from { opacity: 0; transform: translateX(18px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes swipeInFromLeft {
+  from { opacity: 0; transform: translateX(-18px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 .day-card {
