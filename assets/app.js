@@ -185,7 +185,6 @@
   };
 
   bindDaySwipe($("#programme"));
-  bindDaySwipe($("#dayStage"));
 
   document.addEventListener("keydown", (e) => {
     if (e.target.matches("input, textarea, select")) return;
