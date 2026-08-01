@@ -338,7 +338,7 @@
     }),
     item({
       id: "parkings-alt",
-      label: "Parkings (Rondinara, PV, Bavella)",
+      label: "Parkings (Palombaggia, PV, Bavella)",
       detail: "Plages sud-est souvent payantes en HS",
       mid: 35,
       low: 20,
@@ -364,7 +364,7 @@
     assumptions: [
       ...assumptions,
       "Sans Bonifacio bateau ; avec navette Restonica ; Polischellu guidé en option (haut de fourchette).",
-      "Plus de km voiture (Bavella, Rondinara, Porto-Vecchio) → carburant un peu plus élevé.",
+      "Plus de km voiture (Bavella, Palombaggia, Porto-Vecchio, Roccapina escale) → carburant un peu plus élevé.",
     ],
     ...altBuilt,
     perDay: {
@@ -391,9 +391,9 @@
     d10: { mid: 90, note: "Essence Vizzavona + pique-nique + nuit" },
     d11: { mid: 120, note: "Gros transfert CC+voiture + nuit Abbartello" },
     d12: { mid: 100, note: "Filitosa ~25 € + Cupabia + nuit" },
-    d13: { mid: 200, note: "Essence Bonifacio + parking + bateau option + resto" },
+    d13: { mid: 210, note: "Roccapina + Bonifacio + parking + bateau option" },
     d14: { mid: 130, note: "Campomoro + dîner Sartène + nuit" },
-    d15: { mid: 95, note: "Roccapina + pique-nique + nuit (Sartène = veille)" },
+    d15: { mid: 85, note: "Cupabia locale + rangement (sites stars déjà faits)" },
     d16: { mid: 90, note: "Essence restitution + snacks (sans nuit)" },
   };
 
@@ -402,8 +402,8 @@
     d09: { mid: 85, note: "Navette Restonica 8 € + pique-nique + nuit" },
     d12: { mid: 85, note: "Cupabia prioritaire (Filitosa option)" },
     d13: { mid: 130, note: "Bavella + essence ; +150 € si guide Polischellu" },
-    d14: { mid: 140, note: "Rondinara + parking + soir PV + essence longue" },
-    d15: { mid: 130, note: "Campomoro + dîner Sartène (+ sunset option)" },
+    d14: { mid: 145, note: "Palombaggia + parking + soir PV + essence" },
+    d15: { mid: 120, note: "Roccapina escale + dîner Sartène" },
   };
 
   DATA._dayCostsMain = dayCosts;

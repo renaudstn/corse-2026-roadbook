@@ -15,17 +15,17 @@
         <ul>
           <li>Campings & dates (L’Acciola, Bartho, Abbartello)</li>
           <li>Calanques de Piana + Ficajola</li>
-          <li>Sartène en soirée (Place Porta → Valinco → dîner)</li>
-          <li>Replis Restonica / Melo partagés avec le principal</li>
+          <li>Roccapina en escale 2–3 h (pas journée entière)</li>
+          <li>Sartène soirée + replis Restonica / Melo</li>
         </ul>
       </article>
       <article class="alt-principle">
         <h3>Ce qu’on change (avec recherche terrain)</h3>
         <ul>
-          <li>Sud : Bavella à la place de Bonifacio ; Rondinara + Porto-Vecchio</li>
-          <li>Sartène calée le 15 (après Rondinara) plutôt que le 14</li>
-          <li>Polischellu : uniquement avec guide (règles 2024–2026)</li>
-          <li>Roccapina sunset = option si pas Sartène</li>
+          <li>Sud : Bavella à la place de Roccapina→Bonifacio</li>
+          <li>Palombaggia (#2) + PV ; Santa Giulia (#3) en repli</li>
+          <li>Roccapina + Sartène calées le 15 (sans Bonifacio)</li>
+          <li>Polischellu : uniquement avec guide</li>
         </ul>
       </article>
       <article class="alt-principle">

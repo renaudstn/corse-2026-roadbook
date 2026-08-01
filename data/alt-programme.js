@@ -80,7 +80,7 @@
   DATA.altMeta = {
     title: "Variante best-of",
     note:
-      "Même roadbook (campings & dates), version plus « sites spectaculaires ». Calanques de Piana et Sartène (soirée) conservées. Melo/Capitello et Polischellu traités avec les contraintes réelles 2025–2026.",
+      "Même roadbook (campings & dates). Conserve Piana, Roccapina (escale), Sartène soirée et replis Restonica. Échange Bonifacio→Bavella et privilégie Palombaggia / Santa Giulia côté sud-est.",
   };
 
   /* meloFallback : défini dans trip.js (partagé programme principal + variante) */
@@ -367,11 +367,11 @@
       intensity: 4,
       tags: ["point de vue", "guide?", "depart tot"],
       summary:
-        "Col & Aiguilles de Bavella (~1 h 10 depuis Abbartello). Polischellu : accès libre interdit une grande partie de l’annee — uniquement en sortie guidee reservee.",
+        "Col & Aiguilles de Bavella (~1 h 10 depuis Abbartello). Polischellu : accès libre interdit une grande partie de l’année — uniquement en sortie guidée réservée.",
       enrich:
-        "Depuis 2024, Quenza impose un guide pro pour Polischellu (amende possible). Ne pas « tenter le sentier ». Sans réservation guide : Bavella belvédères + retour, ou plage Solenzara/Favone en descente.",
+        "Depuis 2024, Quenza impose un guide pro pour Polischellu (amende possible). Sans réservation guide : Bavella belvédères + plage Solenzara/Favone. Roccapina n’est pas sur cet axe (est) — elle est calée le 15 en escale 2–3 h.",
       why:
-        "Bavella est le pendant montagne du sud que Bonifacio ne remplace pas. On echange la grosse journée urbaine contre aiguilles + (option) vasques encadrées.",
+        "Bavella est le pendant montagne du sud. On échange la journée Roccapina→Bonifacio du principal contre les Aiguilles + (option) vasques encadrées.",
       metrics: [
         { label: "Route", value: "~120 km A/R" },
         { label: "Conduite", value: "~2 h 20" },
@@ -381,179 +381,173 @@
       timeline: [
         { time: "06:30", title: "Réveil", detail: "Petit-déj + pique-nique." },
         { time: "07:00", title: "Départ Abbartello", detail: "Direction Solenzara / D268 / col de Bavella." },
-        { time: "08:15", title: "Col de Bavella", detail: "Parkings tot — points de vue Aiguilles." },
-        { time: "09:00", title: "Belvederes / courte marche", detail: "Rester sur sentiers ouverts, chaleur rapide en aout." },
+        { time: "08:15", title: "Col de Bavella", detail: "Parkings tôt — points de vue Aiguilles." },
+        { time: "09:00", title: "Belvédères / courte marche", detail: "Rester sur sentiers ouverts, chaleur rapide en août." },
         {
           time: "11:00",
           title: "Option Polischellu",
-          detail: "Uniquement si sortie guidee reservee (2 h 30–3 h). Sinon skip.",
+          detail: "Uniquement si sortie guidée réservée (2 h 30–3 h). Sinon skip.",
         },
         {
           time: "13:30",
           title: "Plan sans guide",
           detail: "Pique-nique col ou descente vers Solenzara / petite plage — pas de canyon libre.",
         },
-        { time: "16:00", title: "Retour Abbartello", detail: "Aucune autre grosse activite." },
+        { time: "16:00", title: "Retour Abbartello", detail: "Aucune autre grosse activité." },
       ],
       remember:
-        "Bonifacio n’est plus le grand jour de cette variante (il reste dans le programme principal). Ici : Bavella.",
+        "Bonifacio + escale Roccapina restent dans le programme principal (même date). Ici : Bavella.",
       vigilance:
-        "Polischellu sans guide = risque amende + danger. Feux / vent : verifier arrêtés.",
+        "Polischellu sans guide = risque amende + danger. Feux / vent : vérifier arrêtés.",
       planB:
         "Col de Bavella matin + plage Solenzara/Favone après-midi si guide indisponible ou enfants saturés.",
       mapMarkers: ["abbartello", "bavella", "aiguilles", "polischellu"],
       mapZoom: 9,
-      pack: ["Reservation guide?", "Pique-nique", "Chaussures", "Eau x2"],
+      pack: ["Réservation guide?", "Pique-nique", "Chaussures", "Eau x2"],
       tips: [
         {
           title: "Guide",
-          text: "Réserver Polischellu plusieurs jours avant en aout. Age mini souvent ~8 ans selon prèsta.",
+          text: "Réserver Polischellu plusieurs jours avant en août. Âge mini souvent ~8 ans selon presta.",
         },
         {
-          title: "Bonifacio",
-          text: "Non inclus ici. Pour le voir : garder le programme principal du 13.",
+          title: "Roccapina / Bonifacio",
+          text: "Pour l’axe Sartène→Roccapina→Bonifacio : bouton « Programme principal » du même jour.",
         },
       ],
       maps: "https://www.google.com/maps/dir/Olmeto-Plage/Col+de+Bavella",
       changes: [
         {
           type: "replace",
-          text: "Remplace la journée Bonifacio par Bavella (points de vue best-of absents du programme principal).",
+          text: "Remplace Roccapina→Bonifacio (principal) par Bavella (points de vue absents du principal).",
         },
         {
           type: "add",
-          text: "Ajoute Polischellu en OPTION guidee seulement — pas en randonnée libre.",
+          text: "Ajoute Polischellu en OPTION guidée seulement — pas en randonnée libre.",
         },
         {
           type: "note",
-          text: "Bonifacio reste disponible via le bouton « Programme principal » du meme jour.",
+          text: "Roccapina est récupérée le 15 en escale 2–3 h (variante) pour ne pas l’oublier.",
         },
       ],
     }),
 
     patch("d14", {
-      title: "Rondinara · soir Porto-Vecchio",
-      short: "Rondinara & PV",
-      vibe: "Plage iconique",
+      title: "Palombaggia · soir Porto-Vecchio",
+      short: "Palombaggia & PV",
+      vibe: "Plage n°2 du classement",
       intensity: 4,
       tags: ["plage", "depart tot", "soirée"],
       summary:
-        "Une seule plage star pour rester réaliste : Rondinara (~1 h 50 A/R depuis Abbartello). Soirée légere a Porto-Vecchio. Palombaggia = autre jour ou repli si Rondinara saturée.",
+        "Une seule plage star : Palombaggia (#2 sable). Soirée légère à Porto-Vecchio. Santa Giulia (#3 enfants) = repli famille. Pas d’enchaînement multi-plages.",
       enrich:
-        "Enchaîner Rondinara + Palombaggia + Santa Giulia la meme journée depuis Olmeto = 4 h+ de voiture. On choisit Rondinara (forme coquillage, eau peu profonde) + PV.",
+        "Classement parcours : Roccapina > Palombaggia > Santa Giulia > Cupabia > Campomoro. Depuis Abbartello, une plage réussie > triathlon parking. Rondinara reste un plan B coquillage si vous préférez.",
       why:
-        "Les Top 6 plages du sud-est sont loin d’Abbartello. Mieux vaut une plage réussie qu’un triathlon parking.",
+        "La variante couvre le sud-est que le principal (côte Valinco) ne voit pas. Palombaggia = plus belle plage de sable du classement.",
       metrics: [
         { label: "Route", value: "~180 km A/R" },
         { label: "Conduite", value: "~3 h 40" },
-        { label: "Plage", value: "Rondinara" },
+        { label: "Plage", value: "Palombaggia" },
         { label: "Départ", value: "7 h" },
       ],
       timeline: [
-        { time: "06:30", title: "Réveil", detail: "Pique-nique, cash parking eventuel." },
-        { time: "07:00", title: "Départ Abbartello", detail: "Via Propriano / Sartene / PV selon trafic." },
-        { time: "08:50", title: "Rondinara", detail: "Arrivée avant saturation — baignade longue." },
-        { time: "13:00", title: "Pique-nique / repos", detail: "Ombre limitee : tentes/uv, hydratation." },
+        { time: "06:30", title: "Réveil", detail: "Pique-nique, cash parking éventuel." },
+        { time: "07:00", title: "Départ Abbartello", detail: "Via Propriano / Sartène / PV selon trafic." },
+        { time: "09:00", title: "Palombaggia", detail: "Arrivée avant saturation — baignade longue." },
+        { time: "13:00", title: "Pique-nique / repos", detail: "Ombre limitée : tente/UV, hydratation." },
         { time: "15:30", title: "Départ plage", detail: "Douche sable, route Porto-Vecchio." },
         { time: "16:30", title: "Porto-Vecchio", detail: "Glace / balade port / vieille ville courte." },
-        { time: "18:00", title: "Retour Abbartello", detail: "Diner camping, pas d’autre sortie." },
+        { time: "18:00", title: "Retour Abbartello", detail: "Dîner camping, pas d’autre sortie." },
       ],
-      remember: "Palombaggia et Santa Giulia sont des replis / un autre creneau — pas un combo obligatoire.",
-      vigilance: "Parkings payants / complètes tot en aout. Ne pas laisser d’objets visibless.",
+      remember: "Santa Giulia = repli enfants. Rondinara = alternative forme. Une seule plage le même jour.",
+      vigilance: "Parkings payants / complets tôt en août. Ne pas laisser d’objets visibles.",
       planB:
-        "Si Rondinara complète → Palombaggia OU Santa Giulia (une seule), puis PV. Sinon retour Abbartello / Cupabia.",
-      mapMarkers: ["abbartello", "rondinara", "portoVecchio", "palombaggia"],
+        "Si Palombaggia saturée → Santa Giulia (enfants) OU Rondinara (une seule), puis PV. Sinon retour Cupabia.",
+      mapMarkers: ["abbartello", "palombaggia", "santaGiulia", "portoVecchio"],
       mapZoom: 9,
       pack: ["Départ 7 h", "Cash parking", "Ombre / UV", "Eau"],
       tips: [
         {
-          title: "Pourquoi pas 3 plages",
-          text: "Depuis Abbartello, chaque plage du secteur PV coûte ~1 h 30–2 h A/R. Qualité > quantité.",
+          title: "Classement",
+          text: "Palombaggia #2 sable · Santa Giulia #3 enfants · Roccapina #1 = lendemain en escale (pas journée entière).",
         },
       ],
-      maps: "https://www.google.com/maps/dir/Olmeto-Plage/Plage+de+Rondinara/Porto-Vecchio",
+      maps: "https://www.google.com/maps/dir/Olmeto-Plage/Palombaggia/Porto-Vecchio",
       changes: [
         {
           type: "replace",
-          text: "Remplace Campomoro+Sartène (programme principal d14) par Rondinara + soirée Porto-Vecchio.",
+          text: "Remplace Campomoro+Sartène (principal d14) par Palombaggia (#2) + soirée Porto-Vecchio.",
         },
         {
           type: "add",
-          text: "Ajoute Rondinara (Top plage) et un vrai créneau Porto-Vecchio.",
+          text: "Aligne le choix plage sur le classement : Palombaggia prioritaire, Santa Giulia en repli famille.",
         },
         {
           type: "note",
-          text: "Sartène est calée le lendemain (d15) en soirée — trop loin après Rondinara.",
-        },
-        {
-          type: "alt",
-          text: "Palombaggia / Santa Giulia = repli si Rondinara complète — pas un enchaînement.",
+          text: "Sartène + Roccapina escale = lendemain (d15).",
         },
       ],
     }),
 
     patch("d15", {
-      title: "Campomoro & Sartène en soirée",
-      short: "Campomoro & Sartène",
-      vibe: "Côte proche + patrimoine",
+      title: "Roccapina (escale) & Sartène soir",
+      short: "Roccapina & Sartène",
+      vibe: "Paysage n°1 + patrimoine",
       intensity: 3,
-      tags: ["plage", "village", "patrimoine", "15 août"],
+      tags: ["paysage", "village", "patrimoine", "15 août"],
       summary:
-        "Comme le principal d14 : Campomoro le jour, Sartène vers 17 h (Place Porta, ruelles, Sainte-Marie, Valinco) + dîner. Roccapina sunset = option / plan B.",
+        "Matin : Roccapina 2–3 h (Lion + turquoise — pas journée plage). Fin d’après-midi : Sartène (Place Porta → Valinco → dîner). Campomoro optionnel si énergie.",
       enrich:
-        "Après Rondinara, on reste près d’Abbartello. Sartène officielle ici (le principal l’a mise la veille). Préparer la restitution dès le retour.",
+        "Sans Bonifacio dans la variante, Roccapina doit quand même figurer : même logique d’escale courte (piste, parking août, baignade secondaire). Préparer la restitution dès le retour.",
       why:
-        "Aligne le visage patrimoine (Sartène) sur la variante tout en gardant Campomoro. Le sunset Roccapina reste disponible si vous sautez le dîner village.",
+        "Récupère l’incontournable paysage (#1) oublié quand on remplace Bonifacio par Bavella, plus Sartène patrimoine — sans rallonger le séjour.",
       metrics: [
-        { label: "Route", value: "~100 km" },
-        { label: "Plage", value: "Campomoro" },
+        { label: "Roccapina", value: "2–3 h" },
         { label: "Sartène", value: "2–3 h" },
+        { label: "Départ", value: "7 h 30" },
         { label: "Véhicule", value: "Voiture" },
       ],
       timeline: [
-        { time: "07:30", title: "Petit-déj", detail: "Chaussures si tour génoise." },
-        { time: "08:30", title: "Départ Campomoro", detail: "~45–55 min selon trafic." },
-        { time: "09:30", title: "Tour / plage", detail: "Marche courte au frais puis baignade." },
-        { time: "16:30", title: "Fin de plage", detail: "Rangement, habits soirée légers." },
-        { time: "17:00", title: "Départ Sartène", detail: "~35–45 min." },
-        {
-          time: "17:45",
-          title: "Sartène",
-          detail: "Place Porta · ruelles · Sainte-Marie · panorama Valinco.",
-        },
-        { time: "19:30", title: "Dîner sur place", detail: "Puis retour Abbartello ~21 h." },
+        { time: "07:00", title: "Petit-déj", detail: "Voiture seulement — pas le camping-car." },
+        { time: "07:30", title: "Départ Abbartello", detail: "Via Sartène (passage) → Roccapina." },
+        { time: "08:45", title: "Roccapina", detail: "Belvédère Lion + vue · 2–3 h max." },
+        { time: "11:30", title: "Départ Roccapina", detail: "Si piste/parking KO : belvédère seul puis redescendre." },
+        { time: "12:30", title: "Déjeuner", detail: "Secteur Sartène / Propriano selon faim." },
         {
           time: "—",
-          title: "Option Roccapina sunset",
-          detail: "Si vous sautez Sartène : belvédère Roccapina ~19 h (15 août saturé).",
+          title: "Option Campomoro",
+          detail: "Seulement si fraîcheur + envie (#5) — sinon garder de la marge pour Sartène.",
         },
+        { time: "17:00", title: "Sartène", detail: "Place Porta · ruelles · Sainte-Marie · panorama Valinco." },
+        { time: "19:30", title: "Dîner sur place", detail: "Puis retour Abbartello ~21 h · checklist départ 16." },
       ],
-      remember: "Préparer check-out / carburant / docs dès le retour. Sartène = créneau officiel de cette variante.",
-      vigilance: "15 août = monde sur la côte. Parking Sartène en périphérie.",
-      planB: "Plage Abbartello / Cupabia le jour + Sartène à 17 h depuis le camping. Ou Roccapina sunset sans Sartène.",
-      mapMarkers: ["abbartello", "campomoro", "sartene", "roccapina"],
+      remember:
+        "Roccapina = escale paysage, pas journée entière. Sartène officielle ce soir. Préparer restitution.",
+      vigilance: "15 août saturé · piste parfois dégradée · parking périphérie Sartène.",
+      planB:
+        "Roccapina impossible → Cupabia / Abbartello le jour + Sartène à 17 h. Ou belvédère Roccapina 45 min puis Sartène plus tôt.",
+      mapMarkers: ["abbartello", "roccapina", "sartene", "campomoro"],
       mapZoom: 10,
-      pack: ["Préparer restitution", "Habits soirée", "Cash resto"],
+      pack: ["Préparer restitution", "Voiture (pas CC)", "Habits soirée", "Cash resto"],
       tips: [
         {
-          title: "Sartène",
-          text: "2–3 h : Place Porta, ruelles, Sainte-Marie, panorama Valinco, dîner — chaleur déjà tombée.",
+          title: "Pourquoi 2–3 h seulement",
+          text: "Piste / parking + Palombaggia déjà faite. Roccapina gagne sur le paysage, pas sur 6 h de serviette.",
         },
         {
-          title: "Sunset",
-          text: "Roccapina au coucher = option si vous ne faites pas Sartène ce soir-là.",
+          title: "Sartène",
+          text: "2–3 h : Place Porta, ruelles, Sainte-Marie, Valinco, dîner — chaleur tombée.",
         },
       ],
-      maps: "https://www.google.com/maps/dir/Olmeto-Plage/Campomoro/Sart%C3%A8ne",
+      maps: "https://www.google.com/maps/dir/Olmeto-Plage/Roccapina/Sart%C3%A8ne",
       changes: [
         {
           type: "replace",
-          text: "Remplace Roccapina seule (principal d15) par Campomoro + Sartène soir — aligné sur le principal d14.",
+          text: "Remplace la journée tampon Cupabia (principal d15) par Roccapina escale + Sartène soir — pour garder Roccapina sans Bonifacio.",
         },
         { type: "add", text: "Conserve Sartène officielle (Place Porta → Valinco → dîner)." },
         {
-          type: "alt",
-          text: "Roccapina sunset reste en option / plan B si vous sautez le village.",
+          type: "note",
+          text: "Campomoro (#5) devient option : Palombaggia / Cupabia couvrent mieux la baignade.",
         },
       ],
     }),
