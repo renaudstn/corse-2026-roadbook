@@ -2478,10 +2478,18 @@ button:focus-visible {
   gap: 0.65rem;
 }
 
+.stat {
+  text-align: center;
+}
+
 .stat span {
   font-size: 0.86rem;
-  font-weight: 600;
+  font-weight: 650;
   color: var(--ink-soft);
+}
+
+.day-switcher__hint {
+  color: var(--ink-soft) !important;
 }
 
 .stat--secondary {
