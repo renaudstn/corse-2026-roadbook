@@ -68,6 +68,181 @@
     </div>`;
   };
 
+  const KIND_LABEL = {
+    camp: "Camp",
+    drive: "Route",
+    swim: "Baignade",
+    hike: "Marche",
+    photo: "Photo",
+    visit: "Visite",
+    boat: "Bateau",
+    park: "Parking",
+    food: "Repas",
+    alert: "Info",
+    kids: "Enfants",
+    clock: "Horaire",
+    ferry: "Ferry",
+  };
+
+  const glanceHtml = (items) => {
+    if (!items?.length) return "";
+    return `<div class="glance" aria-label="Résumé du jour">
+      ${items
+        .map(
+          (g) => `<div class="glance__item">
+          <span class="glance__label">${escapeAttr(g.label)}</span>
+          <strong class="glance__value">${escapeAttr(g.value)}</strong>
+        </div>`
+        )
+        .join("")}
+    </div>`;
+  };
+
+  const signalsHtml = (day) => {
+    const bits = [
+      day.difficulty != null ? `<span class="signal"><em>Difficulté</em><strong>${day.difficulty}/5</strong></span>` : "",
+      day.crowd ? `<span class="signal"><em>Affluence</em><strong>${escapeAttr(day.crowd)}</strong></span>` : "",
+      day.weather ? `<span class="signal"><em>Météo idéale</em><strong>${escapeAttr(day.weather)}</strong></span>` : "",
+    ].filter(Boolean);
+    if (!bits.length && !day.kidsTip && !day.vanTip) return "";
+    return `<div class="signals">
+      <div class="signals__badges">${bits.join("")}</div>
+      ${day.kidsTip ? `<p class="signals__tip"><span>Enfants</span>${escapeAttr(day.kidsTip)}</p>` : ""}
+      ${day.vanTip ? `<p class="signals__tip"><span>Van / CC</span>${escapeAttr(day.vanTip)}</p>` : ""}
+    </div>`;
+  };
+
+  const guideCardHtml = (g) => {
+    if (!g) return "";
+    return `<article class="guide-card">
+      <header class="guide-card__head">
+        <h4>${escapeAttr(g.title)}</h4>
+        <div class="guide-card__meta">
+          <span class="badge-soft">${escapeAttr(g.time || "—")}</span>
+          <span class="badge-soft badge-soft--sea">${escapeAttr(g.bestHour || "—")}</span>
+        </div>
+      </header>
+      <dl class="guide-card__dl">
+        <div><dt>Pourquoi c’est exceptionnel</dt><dd>${escapeAttr(g.why)}</dd></div>
+        <div><dt>À ne pas manquer</dt><dd>${escapeAttr(g.dontMiss)}</dd></div>
+        <div><dt>À éviter</dt><dd>${escapeAttr(g.avoid)}</dd></div>
+        ${g.parking ? `<div><dt>Stationnement</dt><dd>${escapeAttr(g.parking)}</dd></div>` : ""}
+        ${g.crowd ? `<div><dt>Affluence</dt><dd>${escapeAttr(g.crowd)}</dd></div>` : ""}
+      </dl>
+    </article>`;
+  };
+
+  const guidesHtml = (ids) => {
+    const list = (ids || []).map((id) => DATA.placeGuides?.[id]).filter(Boolean);
+    if (!list.length) return "";
+    return `<div class="guides">
+      <div class="day-section-head"><h4>Fiches lieux</h4><span class="section-hint">30 secondes par spot</span></div>
+      <div class="guides__grid">${list.map(guideCardHtml).join("")}</div>
+    </div>`;
+  };
+
+  const restonicaPlansHtml = () => {
+    const plans = DATA.restonicaPlans;
+    if (!plans) return "";
+    return `<div class="plan-duo">
+      <div class="day-section-head">
+        <h4>Restonica · deux versions</h4>
+        <span class="section-hint">Choisir A ou B — même niveau de journée</span>
+      </div>
+      ${["A", "B"]
+        .map((key) => {
+          const p = plans[key];
+          return `<article class="plan-card plan-card--${key.toLowerCase()}">
+            <p class="plan-card__id">Version ${p.id}</p>
+            <h4>${escapeAttr(p.title)}</h4>
+            <p class="plan-card__when"><strong>Quand :</strong> ${escapeAttr(p.when)}</p>
+            <p class="plan-card__level">${escapeAttr(p.level)}</p>
+            <p>${escapeAttr(p.summary)}</p>
+            <div class="metrics metrics--embed">
+              ${(p.metrics || [])
+                .map((m) => `<div class="metric"><span>${escapeAttr(m.label)}</span><strong>${escapeAttr(m.value)}</strong></div>`)
+                .join("")}
+            </div>
+            <ol class="timeline timeline--embed">
+              ${(p.timeline || [])
+                .map(
+                  (t) => `<li>
+                  <span class="timeline__time">${escapeAttr(t.time)}</span>
+                  <div class="timeline__body"><h4>${escapeAttr(t.title)}</h4><p>${escapeAttr(t.detail)}</p></div>
+                </li>`
+                )
+                .join("")}
+            </ol>
+          </article>`;
+        })
+        .join("")}
+    </div>`;
+  };
+
+  const pianaBelvederesHtml = () => {
+    const rows = DATA.pianaBelvederes;
+    if (!rows?.length) return "";
+    return `<div class="info-table-wrap">
+      <div class="day-section-head"><h4>Belvédères Calanques</h4><span class="section-hint">Arrêts autorisés seulement</span></div>
+      <table class="info-table">
+        <thead><tr><th>Arrêt</th><th>Durée</th><th>Photo</th><th>Conseil</th></tr></thead>
+        <tbody>
+          ${rows
+            .map(
+              (r) => `<tr>
+              <td>${escapeAttr(r.name)}</td>
+              <td>${escapeAttr(r.duration)}</td>
+              <td>${escapeAttr(r.photo)}</td>
+              <td>${escapeAttr(r.tip)}</td>
+            </tr>`
+            )
+            .join("")}
+        </tbody>
+      </table>
+    </div>`;
+  };
+
+  const bonifacioFocusHtml = () => {
+    const rows = DATA.bonifacioFocus;
+    if (!rows?.length) return "";
+    return `<div class="focus-grid">
+      <div class="day-section-head"><h4>Bonifacio · à couvrir</h4></div>
+      <div class="focus-grid__items">
+        ${rows
+          .map(
+            (r) => `<article class="focus-card">
+            <h5>${escapeAttr(r.title)}</h5>
+            <p>${escapeAttr(r.detail)}</p>
+          </article>`
+          )
+          .join("")}
+      </div>
+    </div>`;
+  };
+
+  const timelineHtml = (timeline) => {
+    if (!timeline?.length) return "";
+    return `<div class="day-section-head">
+      <h4>Déroulé</h4>
+      ${tipBtn("Horaires", "Horaires indicatifs. À ajuster selon météo, circulation et énergie des enfants.", "Timing")}
+    </div>
+    <ol class="timeline">
+      ${timeline
+        .map((t, idx) => {
+          const kind = t.kind ? `<span class="tl-kind">${KIND_LABEL[t.kind] || t.kind}</span>` : "";
+          const n = t.placeId ? `<span class="tl-num">${idx + 1}</span>` : "";
+          return `<li class="${t.kind ? `is-${t.kind}` : ""}">
+          <span class="timeline__time">${escapeAttr(t.time)}</span>
+          <div class="timeline__body">
+            <div class="timeline__title-row">${n}<h4>${escapeAttr(t.title)}</h4>${kind}</div>
+            <p>${escapeAttr(t.detail)}</p>
+          </div>
+        </li>`;
+        })
+        .join("")}
+    </ol>`;
+  };
+
   const dayIndex = (id) => DATA.days.findIndex((d) => d.id === id);
 
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -329,6 +504,10 @@
   $("#todayLink")?.addEventListener("click", (e) => {
     e.preventDefault();
     selectDay(programmeTarget.id);
+  });
+  $("#jumpRestonicaDay")?.addEventListener("click", () => {
+    selectDay("d09");
+    $("#programme")?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
   /* ---------- Maps ---------- */
@@ -609,14 +788,28 @@
       ? `<a class="day-alt-link btn btn--small" href="./index.html?day=${day.id}#programme">Programme principal</a>`
       : `<a class="day-alt-link btn btn--small" href="./alt.html?day=${day.id}">Alternatif</a>`;
 
+    const progressIdx = i + 1;
+    const progressTotal = DATA.days.length;
+    const progressPct = Math.round((progressIdx / progressTotal) * 100);
+    const nightsLeft = Math.max(0, progressTotal - progressIdx);
+    const mapIds = day.mapMarkers || day.stops || [];
+
     stage.innerHTML = `
-      <article class="day-card" id="day-${day.id}">
+      <article class="day-card day-card--premium" id="day-${day.id}">
+        <div class="day-progress" aria-label="Progression du séjour">
+          <div class="day-progress__bar"><i style="width:${progressPct}%"></i></div>
+          <div class="day-progress__meta">
+            <span>Jour ${progressIdx}/${progressTotal}</span>
+            <span>${nightsLeft ? `${nightsLeft} jour${nightsLeft > 1 ? "s" : ""} restant${nightsLeft > 1 ? "s" : ""}` : "Dernier jour"}</span>
+          </div>
+        </div>
+
         <div class="day-card__hero">
           <div class="day-card__meta">
             <span class="tag">${day.weekday} ${day.dayNum} août</span>
             ${day.vibe ? `<span class="tag">${day.vibe}</span>` : ""}
-            ${isToday ? `<span class="tag">Aujourd'hui</span>` : ""}
-            ${(day.tags || []).slice(0, 2).map((t) => `<span class="tag">${t}</span>`).join("")}
+            ${isToday ? `<span class="tag tag--today">Aujourd'hui</span>` : ""}
+            ${(day.tags || []).slice(0, 4).map((t) => `<span class="tag">${t}</span>`).join("")}
           </div>
           <h3>${day.title}</h3>
           <p class="lead">${day.summary}</p>
@@ -640,16 +833,8 @@
           }
         </div>
 
-        ${
-          day.why
-            ? `<div class="why-block">
-                <h4>Pourquoi ce programme</h4>
-                <p>${day.why}</p>
-              </div>`
-            : ""
-        }
-
-        ${altDiffHtml}
+        ${glanceHtml(day.glance)}
+        ${signalsHtml(day)}
 
         ${
           day.metrics?.length
@@ -660,6 +845,54 @@
             )
             .join("")}
         </div>`
+            : ""
+        }
+
+        ${altDiffHtml}
+
+        ${
+          mapIds.length || day.maps
+            ? `<div class="map-block">
+          <div class="map-block__head">
+            <h4>Carte du jour</h4>
+            ${
+              day.maps
+                ? `<a class="map-link" href="${day.maps}" target="_blank" rel="noopener">Itinéraire ↗</a>`
+                : ""
+            }
+          </div>
+          <div id="dayMap" class="map map--day"></div>
+          <ol class="map-legend">
+            ${mapIds
+              .map((id, idx) => {
+                const p = place(id);
+                return p
+                  ? `<li><span class="map-legend__n">${idx + 1}</span><span>${placeInfoHtml(p)}</span></li>`
+                  : "";
+              })
+              .join("")}
+          </ol>
+          <p class="map-caption">${
+            mapIds.length > 1
+              ? "Étapes numérotées · trait = itinéraire routier (OSRM)"
+              : "Point du jour"
+          }</p>
+        </div>`
+            : ""
+        }
+
+        ${day.showRestonicaPlans ? restonicaPlansHtml() : timelineHtml(day.timeline)}
+
+        ${day.showPianaBelvederes ? pianaBelvederesHtml() : ""}
+        ${day.showBonifacioFocus ? bonifacioFocusHtml() : ""}
+        ${guidesHtml(day.guideIds)}
+
+        ${
+          day.why
+            ? `<details class="why-details">
+                <summary>Pourquoi ce programme</summary>
+                <p>${day.why}</p>
+              </details>`
             : ""
         }
 
@@ -682,61 +915,7 @@
             : ""
         }
 
-        ${placesStripHtml(day.mapMarkers)}
-
-        ${
-          day.mapMarkers?.length || day.maps
-            ? `<div class="map-block">
-          <div class="map-block__head">
-            <h4>Carte du jour</h4>
-            ${
-              day.maps
-                ? `<a class="map-link" href="${day.maps}" target="_blank" rel="noopener">Ouvrir l’itinéraire ↗</a>`
-                : ""
-            }
-          </div>
-          <div id="dayMap" class="map map--day"></div>
-          <ol class="map-legend">
-            ${(day.mapMarkers || [])
-              .map((id, idx) => {
-                const p = place(id);
-                return p
-                  ? `<li><span class="map-legend__n">${idx + 1}</span><span>${placeInfoHtml(p)}</span></li>`
-                  : "";
-              })
-              .join("")}
-          </ol>
-          <p class="map-caption">${
-            (day.mapMarkers || []).length > 1
-              ? "Trajet dans l’ordre numéroté · trait = itinéraire routier"
-              : "Point du jour"
-          }</p>
-        </div>`
-            : ""
-        }
-
-        ${
-          day.timeline?.length
-            ? `<div class="day-section-head">
-          <h4>Déroulé</h4>
-          ${tipBtn("Horaires", "Horaires indicatifs voiture/camping-car. À ajuster selon météo, circulation et énergie des enfants.", "Timing")}
-        </div>
-        <ol class="timeline">
-          ${day.timeline
-            .map(
-              (t) => `
-            <li>
-              <span class="timeline__time">${t.time}</span>
-              <div class="timeline__body">
-                <h4>${t.title}</h4>
-                <p>${t.detail}</p>
-              </div>
-            </li>`
-            )
-            .join("")}
-        </ol>`
-            : ""
-        }
+        ${placesStripHtml(mapIds)}
 
         ${
           day.remember || day.vigilance || day.planB
@@ -744,7 +923,7 @@
           ${
             day.remember
               ? `<div class="note">
-            <h4>À retenir ${tipBtn("À retenir", day.remember, "Mémo")}</h4>
+            <h4>À retenir</h4>
             <p>${day.remember}</p>
           </div>`
               : ""
@@ -752,7 +931,7 @@
           ${
             day.vigilance
               ? `<div class="note note--vigilance">
-            <h4>Vigilance ${tipBtn("Vigilance", day.vigilance, "Attention")}</h4>
+            <h4>Vigilance</h4>
             <p>${day.vigilance}</p>
           </div>`
               : ""
@@ -760,7 +939,7 @@
           ${
             day.planB
               ? `<div class="note note--planb" style="grid-column:1/-1">
-            <h4>Plan B ${tipBtn("Plan B", day.planB, "Repli")}</h4>
+            <h4>Plan B</h4>
             <p>${day.planB}</p>
           </div>`
               : ""
@@ -787,10 +966,9 @@
         </div>
       </article>`;
 
-    // Fix empty data-go-day on disabled
     $$(".day-pager__btn[disabled]", stage).forEach((b) => b.removeAttribute("data-go-day"));
 
-    dayMap = makeMap($("#dayMap"), day.mapMarkers, day.mapZoom || 10);
+    dayMap = makeMap($("#dayMap"), mapIds, day.mapZoom || 10);
   };
 
   /* ---------- Bases ---------- */
@@ -987,6 +1165,76 @@
     renderChecks();
   });
 
+  /* ---------- Trip pulse (overview) ---------- */
+  const tripPulse = $("#tripPulse");
+  if (tripPulse) {
+    const nights = DATA.bases?.reduce((n, b) => n + (b.nights || 0), 0) || 13;
+    const kmHint = IS_ALT ? "~1 050 km" : "~950 km";
+    const today = findToday();
+    const tIdx = today ? dayIndex(today.id) + 1 : 0;
+    const remaining = today ? Math.max(0, DATA.days.length - tIdx) : DATA.days.length;
+    tripPulse.innerHTML = `
+      <div class="pulse-card"><span>Nuits</span><strong>${nights}</strong></div>
+      <div class="pulse-card"><span>Km estimés</span><strong>${kmHint}</strong></div>
+      <div class="pulse-card"><span>Bases</span><strong>${DATA.bases?.length || 3}</strong></div>
+      <div class="pulse-card"><span>${today ? "Jours restants" : "Jours"}</span><strong>${today ? remaining : DATA.days.length}</strong></div>
+    `;
+  }
+
+  /* ---------- Beaches & pools panels ---------- */
+  const beachRoot = $("#beachGuide");
+  if (beachRoot && DATA.beachGuide) {
+    beachRoot.innerHTML = `
+      <div class="rank-table-wrap">
+        <table class="info-table">
+          <thead>
+            <tr><th>#</th><th>Plage</th><th>Intérêt</th><th>Affluence</th><th>Van / CC</th><th>Temps</th><th>Quand</th></tr>
+          </thead>
+          <tbody>
+            ${DATA.beachGuide
+              .map(
+                (b) => `<tr>
+                <td><span class="rank-pill">${b.rank}</span></td>
+                <td><strong>${escapeAttr(b.name)}</strong></td>
+                <td>${escapeAttr(b.interest)}</td>
+                <td>${escapeAttr(b.crowd)}</td>
+                <td>${escapeAttr(b.van)}</td>
+                <td>${escapeAttr(b.time)}</td>
+                <td>${escapeAttr(b.when)}</td>
+              </tr>`
+              )
+              .join("")}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  const poolsRoot = $("#poolsGuide");
+  if (poolsRoot && DATA.pools) {
+    poolsRoot.innerHTML = `
+      <div class="pool-grid">
+        ${DATA.pools
+          .map(
+            (p) => `<article class="pool-card ${p.keep ? "is-keep" : "is-drop"}">
+            <header>
+              ${p.rank ? `<span class="rank-pill">${p.rank}</span>` : `<span class="rank-pill rank-pill--mute">—</span>`}
+              <h3>${escapeAttr(p.name)}</h3>
+              <span class="pool-card__flag">${p.keep ? "Conservée" : "Écartée"}</span>
+            </header>
+            <p>${escapeAttr(p.interest)}</p>
+            <ul class="pool-card__meta">
+              <li><em>Affluence</em> ${escapeAttr(p.crowd)}</li>
+              <li><em>Accès</em> ${escapeAttr(p.access)}</li>
+              <li><em>Van</em> ${escapeAttr(p.van)}</li>
+              <li><em>Temps</em> ${escapeAttr(p.time)}</li>
+            </ul>
+            <p class="pool-card__note">${escapeAttr(p.note)}</p>
+          </article>`
+          )
+          .join("")}
+      </div>`;
+  }
+
   /* ---------- Logistics & contacts ---------- */
   const logGrid = $("#logGrid");
   if (logGrid && DATA.logistics) {
@@ -1018,7 +1266,20 @@
   }
 
   /* ---------- Active nav ---------- */
-  const sections = ["accueil", "intro-alt", "replis-melo", "programme", "budget", "bases", "checklist", "logistique", "contacts"]
+  const sections = [
+    "accueil",
+    "intro-alt",
+    "replis-melo",
+    "replis-restonica",
+    "programme",
+    "plages",
+    "piscines",
+    "budget",
+    "bases",
+    "checklist",
+    "logistique",
+    "contacts",
+  ]
     .map((id) => document.getElementById(id))
     .filter(Boolean);
 
@@ -1027,6 +1288,9 @@
       const key = el.getAttribute("data-nav");
       const map = {
         home: "accueil",
+        beaches: "plages",
+        pools: "piscines",
+        replis: "replis-restonica",
         days: "programme",
         budget: "budget",
         bases: "bases",

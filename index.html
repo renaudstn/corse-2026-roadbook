@@ -30,7 +30,9 @@
     <nav class="drawer__nav" aria-label="Sections">
       <a href="#accueil" data-nav="home">Accueil</a>
       <a href="#programme" data-nav="days">Programme</a>
-      <a href="#replis-restonica" data-nav="replis">Restonica / Melo</a>
+      <a href="#replis-restonica" data-nav="replis">Restonica A/B</a>
+      <a href="#plages" data-nav="beaches">Plages</a>
+      <a href="#piscines" data-nav="pools">Piscines</a>
       <a href="./alt.html">Variante best-of</a>
       <a href="#budget" data-nav="budget">Budget</a>
       <a href="#bases" data-nav="bases">Campings</a>
@@ -74,7 +76,7 @@
           <span class="hero__title-year" data-hero-reveal>2026</span>
         </h1>
         <p class="hero__lead" data-hero-reveal>
-          Roadbook familial · nature, peu de villes, camping-car peu déplacé.
+          Roadbook familial premium · mer, montagne, patrimoine · camping-car peu déplacé.
         </p>
         <div class="hero__cta" data-hero-reveal>
           <button class="btn btn--primary" id="jumpToday" type="button">Programme</button>
@@ -97,6 +99,7 @@
         <h2>Le séjour en un regard</h2>
         <p>14 jours · 13 nuits · 3 bases · 1 camping-car + 1 voiture</p>
       </div>
+      <div class="trip-pulse" id="tripPulse" data-reveal></div>
       <div class="stat-row" id="statRow" data-reveal></div>
       <div class="overview-map-wrap" data-reveal>
         <div id="overviewMap" class="map map--overview" role="img" aria-label="Carte des bases du séjour"></div>
@@ -136,6 +139,23 @@
         <p id="meloIntro"></p>
       </div>
       <div class="alt-fallbacks" id="meloFallbacks"></div>
+      <p class="section-foot">Détail Version A / B aussi sur la carte du <button type="button" class="text-link" id="jumpRestonicaDay">9 août</button>.</p>
+    </section>
+
+    <section class="panel" id="plages">
+      <div class="section-head">
+        <h2>Meilleures plages du parcours</h2>
+        <p>Classement · affluence · van · temps conseillé — une plage réussie plutôt qu’un triathlon parking.</p>
+      </div>
+      <div id="beachGuide"></div>
+    </section>
+
+    <section class="panel" id="piscines">
+      <div class="section-head">
+        <h2>Piscines naturelles</h2>
+        <p>Comparatif Corse · seules les plus pertinentes pour vos bases sont conservées.</p>
+      </div>
+      <div id="poolsGuide"></div>
     </section>
 
     <section class="panel" id="budget">
@@ -203,6 +223,7 @@
 
   <script src="./assets/vendor/leaflet.js"></script>
   <script src="./data/trip.js"></script>
+  <script src="./data/premium.js"></script>
   <script src="./data/budget.js"></script>
   <script src="./assets/app.js"></script>
 </body>
