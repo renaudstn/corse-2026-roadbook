@@ -527,12 +527,39 @@
 
   /* ---------- Maps ---------- */
   const refreshMap = (map) => {
-    if (!map) return;
+    if (!map || map._corseDestroyed || !map.getContainer?.()?.parentNode) return;
     requestAnimationFrame(() => {
-      map.invalidateSize(true);
-      setTimeout(() => map.invalidateSize(true), 120);
-      setTimeout(() => map.invalidateSize(true), 420);
+      if (!map || map._corseDestroyed || !map.getContainer?.()?.parentNode) return;
+      try {
+        map.invalidateSize(true);
+      } catch {
+        return;
+      }
+      const t1 = setTimeout(() => {
+        if (!map._corseDestroyed && map.getContainer?.()?.parentNode) {
+          try { map.invalidateSize(true); } catch { /* removed */ }
+        }
+      }, 120);
+      const t2 = setTimeout(() => {
+        if (!map._corseDestroyed && map.getContainer?.()?.parentNode) {
+          try { map.invalidateSize(true); } catch { /* removed */ }
+        }
+      }, 420);
+      map._corseTimers = [...(map._corseTimers || []), t1, t2];
     });
+  };
+
+  const destroyMap = (map) => {
+    if (!map) return null;
+    map._corseDestroyed = true;
+    (map._corseTimers || []).forEach((id) => clearTimeout(id));
+    map._corseIo?.disconnect?.();
+    try {
+      map.remove();
+    } catch {
+      /* already detached */
+    }
+    return null;
   };
 
   const markerColor = (kind) =>
@@ -635,27 +662,33 @@
 
     if (road && pts.length >= 2) {
       fetchRoadRoute(pts).then((roadLatLngs) => {
-        if (!roadLatLngs?.length || !map) return;
-        if (routeLine) map.removeLayer(routeLine);
-        routeLine = L.polyline(roadLatLngs, {
-          color: "#163f39",
-          weight: 4,
-          opacity: 0.9,
-          lineJoin: "round",
-        }).addTo(map);
-        if (captionEl) captionEl.textContent = "Itinéraire routier estimé";
-        map.fitBounds(routeLine.getBounds(), { padding: [40, 40], maxZoom: Math.min(zoom, 12) });
-        refreshMap(map);
+        if (!roadLatLngs?.length || !map || map._corseDestroyed || !map.getContainer?.()?.parentNode) return;
+        try {
+          if (routeLine) map.removeLayer(routeLine);
+          routeLine = L.polyline(roadLatLngs, {
+            color: "#163f39",
+            weight: 4,
+            opacity: 0.9,
+            lineJoin: "round",
+          }).addTo(map);
+          if (captionEl?.isConnected) captionEl.textContent = "Itinéraire routier estimé";
+          map.fitBounds(routeLine.getBounds(), { padding: [40, 40], maxZoom: Math.min(zoom, 12) });
+          refreshMap(map);
+        } catch {
+          /* map removed during async route fetch */
+        }
       });
     }
 
     const io = new IntersectionObserver(
       (entries) => {
+        if (map._corseDestroyed) return;
         if (entries.some((e) => e.isIntersecting)) refreshMap(map);
       },
       { threshold: 0.2 }
     );
     io.observe(el);
+    map._corseIo = io;
     return map;
   };
 
@@ -1075,10 +1108,7 @@
     const isToday = day.date === REAL_TODAY;
     const maps = googleMapsFor(day);
 
-    if (dayMap) {
-      dayMap.remove();
-      dayMap = null;
-    }
+    dayMap = destroyMap(dayMap);
 
     const altLinkHtml = IS_ALT
       ? `<a class="day-alt-link btn btn--small" href="./index.html?day=${h(day.id)}#programme">Programme principal</a>`
@@ -1510,7 +1540,7 @@
     const date = fmtDateFr(DATA.meta?.editorialDate);
     if (footer && date) {
       footer.textContent = IS_ALT
-        ? `Variante best-of · infos au ${date} · pas une source temps réel.`
+        ? `Variantes & replis · infos au ${date} · pas une source temps réel.`
         : `Plan de voyage familial · infos au ${date} · pas une source temps réel.`;
     }
   };

@@ -4,16 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0b2e2a" />
-  <meta name="description" content="Variante best-of Corse 2026 — même format que le programme (horaires, cartes, liens), Calanques de Piana conservées." />
+  <meta name="description" content="Variantes et replis Corse 2026 — météo, accès fermés, option sportive. Complément du programme principal." />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <title>Corse 2026 · Variante best-of</title>
+  <title>Corse 2026 · Variantes &amp; replis</title>
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./icons/apple-touch.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./assets/vendor/leaflet.css" />
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body class="alt-page" data-mode="alt">
@@ -21,71 +20,47 @@
 
   <aside class="drawer" id="drawer" aria-hidden="true">
     <div class="drawer__head">
-      <p class="drawer__title">Variante best-of</p>
+      <p class="drawer__title">Variantes &amp; replis</p>
       <button class="drawer__close" id="drawerClose" type="button" aria-label="Fermer">×</button>
     </div>
     <nav class="drawer__nav" aria-label="Sections">
       <a href="./index.html">Programme principal</a>
-      <a href="#intro-alt">Principes</a>
-      <a href="#replis-melo">Replis Melo</a>
-      <a href="#programme" data-nav="days">Jours</a>
-      <a href="#budget" data-nav="budget">Budget</a>
+      <a href="#intro-alt" data-nav="intro">Rôle de cette page</a>
+      <a href="#replis-melo" data-nav="melo">Option sportive Restonica</a>
+      <a href="#variants" data-nav="variants">Replis par jour</a>
     </nav>
-    <div class="drawer__days">
-      <p class="drawer__label">Aller au jour</p>
-      <div class="drawer__day-list" id="drawerDays"></div>
-    </div>
-    <p class="drawer__note">Même format que le programme principal · swipe horizontal · flèches ← →</p>
+    <p class="drawer__note">Cette page n'est pas un second roadbook. Le programme recommandé reste sur la page principale.</p>
   </aside>
   <div class="scrim" id="scrim" hidden></div>
 
   <header class="alt-top">
-    <a class="alt-top__back" href="./index.html">← Principal</a>
-    <p class="alt-top__badge">Variante best-of</p>
+    <a class="alt-top__back" href="./index.html">← Programme principal</a>
+    <p class="alt-top__badge">Variantes &amp; replis</p>
   </header>
 
   <main id="main" class="alt-main">
     <section class="panel alt-panel" id="intro-alt">
       <div class="section-head">
-        <h2>Variante best-of</h2>
-        <p id="altLead">Mêmes campings & dates · format complet (horaires, cartes, liens) · recherches terrain 2025–2026.</p>
+        <h2>Complément, pas concurrent</h2>
+        <p id="altLead">Météo défavorable, accès Restonica fermé, option sportive conditionnelle — sans faire diverger un second programme.</p>
       </div>
       <div class="alt-principles" id="altPrinciples"></div>
     </section>
 
     <section class="panel alt-panel" id="replis-melo">
       <div class="section-head">
-        <h2 id="meloTitle">Replis Melo & Capitello</h2>
+        <h2 id="meloTitle">Option sportive Restonica</h2>
         <p id="meloIntro"></p>
       </div>
       <div class="alt-fallbacks" id="meloFallbacks"></div>
     </section>
 
-    <section class="panel panel--flush" id="programme">
-      <div class="section-head section-head--pad">
-        <h2>Programme alternatif jour par jour</h2>
-        <p>Horaires indicatifs · swipe pour changer de jour · bouton « Programme principal » sur chaque carte.</p>
-      </div>
-
-      <div class="day-switcher" id="daySwitcher">
-        <button type="button" class="day-switcher__btn" id="prevDay" aria-label="Jour précédent">‹</button>
-        <button type="button" class="day-switcher__current" id="daySwitcherLabel" aria-haspopup="listbox">
-          <span class="day-switcher__date" id="switchDate">—</span>
-          <span class="day-switcher__title" id="switchTitle">—</span>
-        </button>
-        <button type="button" class="day-switcher__btn" id="nextDay" aria-label="Jour suivant">›</button>
-      </div>
-
-      <div class="day-rail" id="dayRail" role="tablist" aria-label="Jours du séjour (variante)"></div>
-      <div class="day-stage" id="dayStage"></div>
-    </section>
-
-    <section class="panel alt-panel" id="budget">
+    <section class="panel alt-panel" id="variants">
       <div class="section-head">
-        <h2>Budget estimé (variante)</h2>
-        <p>Même méthode que le principal · écart carburant / activités signalé.</p>
+        <h2>Replis &amp; options par jour</h2>
+        <p>Extraits du programme principal — chaque variante indique ce qu'elle remplace, ajoute ou raccourcit.</p>
       </div>
-      <div id="budgetRoot"></div>
+      <div id="variantsRoot"></div>
     </section>
   </main>
 
@@ -94,7 +69,7 @@
   </button>
 
   <div class="tip-layer" id="tipLayer" hidden>
-    <div class="tip-card" role="dialog" aria-modal="true" aria-labelledby="tipTitle">
+    <div class="tip-card" role="dialog" aria-modal="true" aria-labelledby="tipTitle" aria-describedby="tipBody">
       <button class="tip-card__close" id="tipClose" type="button" aria-label="Fermer">×</button>
       <p class="tip-card__eyebrow" id="tipEyebrow">Info</p>
       <h3 id="tipTitle"></h3>
@@ -103,13 +78,11 @@
   </div>
 
   <footer class="footer">
-    <p>Variante best-of · n’écrase pas le programme principal · recherches accès Restonica / Polischellu 2025–2026.</p>
+    <p>Variantes &amp; replis · le programme recommandé reste sur <a href="./index.html">index.html</a>.</p>
   </footer>
 
-  <script src="./assets/vendor/leaflet.js"></script>
   <script src="./data/trip.js"></script>
   <script src="./data/alt-programme.js"></script>
-  <script src="./data/budget.js"></script>
   <script src="./assets/alt-boot.js"></script>
   <script src="./assets/app.js"></script>
 </body>
