@@ -80,40 +80,10 @@
   DATA.altMeta = {
     title: "Variante best-of",
     note:
-      "Même roadbook (campings & dates), version plus « sites spectaculaires ». Calanques de Piana conservées. Melo/Capitello et Polischellu traités avec les contraintes réelles 2025–2026 (accès, guide, famille).",
+      "Même roadbook (campings & dates), version plus « sites spectaculaires ». Calanques de Piana et Sartène (soirée) conservées. Melo/Capitello et Polischellu traités avec les contraintes réelles 2025–2026.",
   };
 
-  DATA.meloFallback = {
-    title: "Replis Melo & Capitello (réalistes en 2026)",
-    intro:
-      "Depuis les crues de 2023, la route Restonica s’arrête au pont de Frasseta. Melo ≈ 16–18 km A/R et 7–9 h ; Capitello encore plus. Inadapté à 5 et 8 ans. Les options ci-dessous remplacent l’objectif « lacs ».",
-    options: [
-      {
-        id: "A",
-        name: "Restonica basse (Frasseta / Tuani)",
-        replaces: "Remplace la montée aux lacs Melo / Capitello",
-        when: "Navette / accès ouverts, mais pas d’objectif lac",
-        detail:
-          "Navette Corte → Frasseta (réserver Via Corsica / M-Ticket, ~4 € A/R, −8 ans souvent gratuit). Marche rivière + baignade vasques du bas. Retour avant la chaleur.",
-      },
-      {
-        id: "B",
-        name: "Tavignano depuis Chez Bartho",
-        replaces: "Remplace toute la journée Restonica",
-        when: "Restonica fermée, navette KO, orage, ou enfants fatigués",
-        detail:
-          "Départ à pied du camping → sentier Tavignano 2–3 h familial → baignade zone sûre → repos. Excellent plan principal.",
-      },
-      {
-        id: "C",
-        name: "Vizzavona + cascade des Anglais",
-        replaces: "Remplace Restonica si vous voulez de l’eau en forêt sans canyon",
-        when: "Envie d’ombre et de marche douce",
-        detail:
-          "Basculer sur le programme type jour 10 (Vizzavona). Le « canyon Verghellu » cité dans les best-of est une activité guidée dès 10 ans — pas pour 5 ans.",
-      },
-    ],
-  };
+  /* meloFallback : défini dans trip.js (partagé programme principal + variante) */
 
   const byId = Object.fromEntries(DATA.days.map((d) => [d.id, d]));
 
@@ -505,64 +475,85 @@
       changes: [
         {
           type: "replace",
-          text: "Remplace Campomoro (tour+plage) par Rondinara + soiree Porto-Vecchio.",
+          text: "Remplace Campomoro+Sartène (programme principal d14) par Rondinara + soirée Porto-Vecchio.",
         },
         {
           type: "add",
-          text: "Ajoute Rondinara (Top plage) et un vrai creneau Porto-Vecchio.",
+          text: "Ajoute Rondinara (Top plage) et un vrai créneau Porto-Vecchio.",
+        },
+        {
+          type: "note",
+          text: "Sartène est calée le lendemain (d15) en soirée — trop loin après Rondinara.",
         },
         {
           type: "alt",
-          text: "Palombaggia / Santa Giulia = repli si Rondinara incomplète — pas un enchainement.",
+          text: "Palombaggia / Santa Giulia = repli si Rondinara complète — pas un enchaînement.",
         },
       ],
     }),
 
     patch("d15", {
-      title: "Campomoro le jour · Roccapina au coucher",
-      short: "Campomoro & sunset",
-      vibe: "Cote proche + sunset",
+      title: "Campomoro & Sartène en soirée",
+      short: "Campomoro & Sartène",
+      vibe: "Côte proche + patrimoine",
       intensity: 3,
-      tags: ["plage", "sunset", "15 aout"],
+      tags: ["plage", "village", "patrimoine", "15 août"],
       summary:
-        "Matinee / après-midi Campomoro (tour si fraîcheur). Fin de journée Roccapina pour belvédère / coucher de soleil. Sartene devient option courte.",
+        "Comme le principal d14 : Campomoro le jour, Sartène vers 17 h (Place Porta, ruelles, Sainte-Marie, Valinco) + dîner. Roccapina sunset = option / plan B.",
       enrich:
-        "Le 15 aout sature Roccapina : viser le belvédère plutot que la piste plage si doute. Si foule extreme → sunset depuis Campomoro.",
+        "Après Rondinara, on reste près d’Abbartello. Sartène officielle ici (le principal l’a mise la veille). Préparer la restitution dès le retour.",
       why:
-        "Après la grosse route Rondinara, on reste proche d’Abbartello et on offre le sunset demande par les best-of sans refaire 200 km.",
+        "Aligne le visage patrimoine (Sartène) sur la variante tout en gardant Campomoro. Le sunset Roccapina reste disponible si vous sautez le dîner village.",
       metrics: [
-        { label: "Route", value: "~90–130 km" },
+        { label: "Route", value: "~100 km" },
         { label: "Plage", value: "Campomoro" },
-        { label: "Sunset", value: "Roccapina" },
-        { label: "Vehicule", value: "Voiture" },
+        { label: "Sartène", value: "2–3 h" },
+        { label: "Véhicule", value: "Voiture" },
       ],
       timeline: [
         { time: "07:30", title: "Petit-déj", detail: "Chaussures si tour génoise." },
         { time: "08:30", title: "Départ Campomoro", detail: "~45–55 min selon trafic." },
-        { time: "09:30", title: "Tour / plage", detail: "Marche courte au frais puis baignade longue." },
-        { time: "15:30", title: "Route Roccapina", detail: "Belvedere pour la lumiere du soir." },
-        { time: "19:00", title: "Coucher de soleil", detail: "Photos, vent possible, redescendre avant la nuit totale." },
-        { time: "20:15", title: "Retour Abbartello", detail: "Preparer restitution du 16." },
+        { time: "09:30", title: "Tour / plage", detail: "Marche courte au frais puis baignade." },
+        { time: "16:30", title: "Fin de plage", detail: "Rangement, habits soirée légers." },
+        { time: "17:00", title: "Départ Sartène", detail: "~35–45 min." },
+        {
+          time: "17:45",
+          title: "Sartène",
+          detail: "Place Porta · ruelles · Sainte-Marie · panorama Valinco.",
+        },
+        { time: "19:30", title: "Dîner sur place", detail: "Puis retour Abbartello ~21 h." },
+        {
+          time: "—",
+          title: "Option Roccapina sunset",
+          detail: "Si vous sautez Sartène : belvédère Roccapina ~19 h (15 août saturé).",
+        },
       ],
-      remember: "Preparer check-out / carburant / docs dès le retour.",
-      vigilance: "15 aout = monde. Piste Roccapina : ne pas engager un véhicule inadéquat.",
-      planB: "Tout Campomoro jusqu’au sunset si Roccapina impossible.",
-      mapMarkers: ["abbartello", "campomoro", "roccapina"],
+      remember: "Préparer check-out / carburant / docs dès le retour. Sartène = créneau officiel de cette variante.",
+      vigilance: "15 août = monde sur la côte. Parking Sartène en périphérie.",
+      planB: "Plage Abbartello / Cupabia le jour + Sartène à 17 h depuis le camping. Ou Roccapina sunset sans Sartène.",
+      mapMarkers: ["abbartello", "campomoro", "sartene", "roccapina"],
       mapZoom: 10,
-      pack: ["Preparer restitution", "Lampe", "Coupe-vent"],
+      pack: ["Préparer restitution", "Habits soirée", "Cash resto"],
       tips: [
-        { title: "Sartene", text: "Option déjeuner court seulement si vous sautez la tour Campomoro." },
+        {
+          title: "Sartène",
+          text: "2–3 h : Place Porta, ruelles, Sainte-Marie, panorama Valinco, dîner — chaleur déjà tombée.",
+        },
+        {
+          title: "Sunset",
+          text: "Roccapina au coucher = option si vous ne faites pas Sartène ce soir-là.",
+        },
       ],
-      maps: "https://www.google.com/maps/dir/Olmeto-Plage/Campomoro/Roccapina",
+      maps: "https://www.google.com/maps/dir/Olmeto-Plage/Campomoro/Sart%C3%A8ne",
       changes: [
         {
           type: "replace",
-          text: "Remplace Roccapina+Sartene « journée classique » par Campomoro jour + Roccapina sunset.",
+          text: "Remplace Roccapina seule (principal d15) par Campomoro + Sartène soir — aligné sur le principal d14.",
         },
-        { type: "add", text: "Ajoute un coucher de soleil dédié (Campomoro ou Roccapina)." },
+        { type: "add", text: "Conserve Sartène officielle (Place Porta → Valinco → dîner)." },
         {
           type: "alt",
-          text: "Si 15 aout sature a Roccapina → sunset Campomoro (remplace le deplacement).",
+          text: "Roccapina sunset reste en option / plan B si vous sautez le village.",
         },
       ],
     }),

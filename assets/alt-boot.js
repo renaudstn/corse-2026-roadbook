@@ -15,17 +15,17 @@
         <ul>
           <li>Campings & dates (L’Acciola, Bartho, Abbartello)</li>
           <li>Calanques de Piana + Ficajola</li>
-          <li>Aïtone, Scandola, Cupabia</li>
-          <li>Format complet : horaires, cartes, liens lieux</li>
+          <li>Sartène en soirée (Place Porta → Valinco → dîner)</li>
+          <li>Replis Restonica / Melo partagés avec le principal</li>
         </ul>
       </article>
       <article class="alt-principle">
         <h3>Ce qu’on change (avec recherche terrain)</h3>
         <ul>
-          <li>Restonica : version basse réaliste (pas Melo/Capitello en famille depuis Frasseta)</li>
           <li>Sud : Bavella à la place de Bonifacio ; Rondinara + Porto-Vecchio</li>
+          <li>Sartène calée le 15 (après Rondinara) plutôt que le 14</li>
           <li>Polischellu : uniquement avec guide (règles 2024–2026)</li>
-          <li>Sunset Campomoro / Roccapina</li>
+          <li>Roccapina sunset = option si pas Sartène</li>
         </ul>
       </article>
       <article class="alt-principle">
@@ -38,24 +38,5 @@
       </article>`;
   }
 
-  const melo = DATA.meloFallback;
-  if (!melo) return;
-  const title = $("#meloTitle");
-  const intro = $("#meloIntro");
-  const box = $("#meloFallbacks");
-  if (title) title.textContent = melo.title;
-  if (intro) intro.textContent = melo.intro;
-  if (box) {
-    box.innerHTML = melo.options
-      .map(
-        (opt) => `<article class="alt-fallback">
-        <p class="alt-fallback__id">Repli ${opt.id}</p>
-        <h3>${opt.name}</h3>
-        <p class="alt-fallback__replaces">${opt.replaces}</p>
-        <p class="alt-fallback__when"><strong>Quand :</strong> ${opt.when}</p>
-        <p>${opt.detail}</p>
-      </article>`
-      )
-      .join("");
-  }
+  /* meloFallback rendu par app.js (partagé principal + variante) */
 })();

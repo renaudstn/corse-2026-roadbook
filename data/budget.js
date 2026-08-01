@@ -392,8 +392,8 @@
     d11: { mid: 120, note: "Gros transfert CC+voiture + nuit Abbartello" },
     d12: { mid: 100, note: "Filitosa ~25 € + Cupabia + nuit" },
     d13: { mid: 200, note: "Essence Bonifacio + parking + bateau option + resto" },
-    d14: { mid: 95, note: "Campomoro + pique-nique + nuit" },
-    d15: { mid: 110, note: "Roccapina/Sartène + possible resto + nuit" },
+    d14: { mid: 130, note: "Campomoro + dîner Sartène + nuit" },
+    d15: { mid: 95, note: "Roccapina + pique-nique + nuit (Sartène = veille)" },
     d16: { mid: 90, note: "Essence restitution + snacks (sans nuit)" },
   };
 
@@ -403,7 +403,7 @@
     d12: { mid: 85, note: "Cupabia prioritaire (Filitosa option)" },
     d13: { mid: 130, note: "Bavella + essence ; +150 € si guide Polischellu" },
     d14: { mid: 140, note: "Rondinara + parking + soir PV + essence longue" },
-    d15: { mid: 100, note: "Campomoro + Roccapina sunset" },
+    d15: { mid: 130, note: "Campomoro + dîner Sartène (+ sunset option)" },
   };
 
   DATA._dayCostsMain = dayCosts;

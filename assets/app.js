@@ -1059,11 +1059,34 @@
   $("#heroTitle")?.addEventListener("click", goHomeTop);
   $$('a[href="#accueil"]').forEach((a) => a.addEventListener("click", goHomeTop));
 
+  /* ---------- Restonica / Melo fallbacks (shared main + alt) ---------- */
+  const renderMeloFallback = () => {
+    const melo = DATA.meloFallback;
+    const box = $("#meloFallbacks");
+    if (!melo || !box) return;
+    const title = $("#meloTitle");
+    const intro = $("#meloIntro");
+    if (title) title.textContent = melo.title;
+    if (intro) intro.textContent = melo.intro;
+    box.innerHTML = melo.options
+      .map(
+        (opt) => `<article class="alt-fallback">
+        <p class="alt-fallback__id">Repli ${opt.id}</p>
+        <h3>${opt.name}</h3>
+        <p class="alt-fallback__replaces">${opt.replaces}</p>
+        <p class="alt-fallback__when"><strong>Quand :</strong> ${opt.when}</p>
+        <p>${opt.detail}</p>
+      </article>`
+      )
+      .join("");
+  };
+
   /* ---------- Boot ---------- */
   renderRail();
   renderDay();
   updateSwitcher();
   updateDrawerActive();
+  renderMeloFallback();
 
   // Alt deep-link: scroll to programme, keep ?day= in the URL
   if (IS_ALT && dayParam) {
