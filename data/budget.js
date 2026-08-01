@@ -82,20 +82,20 @@
     item({
       id: "fuel-cc",
       label: "Diesel camping-car",
-      detail: "~300 km transferts (Ajaccio↔bases) · 12 L/100 · 1,95 €/L",
-      mid: 70,
-      low: 58,
-      high: 85,
+      detail: "~406 km transferts CC (3+4+8+11+16 août) · 12 L/100 · 1,95 €/L",
+      mid: 95,
+      low: 80,
+      high: 115,
       confidence: "mid",
       source: "OSRM trajets + conso CC montagne",
     }),
     item({
       id: "fuel-car",
       label: "Diesel / essence voiture",
-      detail: "~850 km (transferts suivis + sorties jour) · 7,5 L/100 · 1,95 €/L",
-      mid: 125,
-      low: 105,
-      high: 155,
+      detail: "~950–1100 km (suivis + sorties jour, scénario B) · 7,5 L/100 · 1,95 €/L",
+      mid: 145,
+      low: 120,
+      high: 175,
       confidence: "mid",
       source: "OSRM sorties programme principal",
     }),
@@ -103,9 +103,9 @@
       id: "fuel-buffer",
       label: "Marge essence (bouchons, erreurs, errances)",
       detail: "+12 % sur carburant",
-      mid: 25,
-      low: 15,
-      high: 40,
+      mid: 30,
+      low: 18,
+      high: 48,
       confidence: "low",
       source: "Marge sécurité août",
     }),
@@ -115,7 +115,7 @@
     item({
       id: "scandola",
       label: "Bateau Scandola / Girolata (Porto)",
-      detail: "HS ~55 €/adulte · ~40 €/enfant 5–8 · départ Porto 2 h 30",
+      detail: "HS ~55 €/adulte · ~40 €/enfant 5–8 · départ Porto · navigation ~2 h 30–3 h",
       mid: 190,
       low: 160,
       high: 230,
@@ -242,14 +242,14 @@
   DATA.budget = {
     id: "main",
     title: "Budget séjour (programme principal)",
-    updated: "2026-07-30",
+    updated: "2026-08-01",
     party,
     assumptions,
     ...mainBuilt,
     perDay: {
-      mid: Math.round(mainBuilt.totals.mid / 14),
-      low: Math.round(mainBuilt.totals.low / 14),
-      high: Math.round(mainBuilt.totals.high / 14),
+      mid: Math.round(mainBuilt.totals.mid / Math.max(1, (DATA.days || []).length || 14)),
+      low: Math.round(mainBuilt.totals.low / Math.max(1, (DATA.days || []).length || 14)),
+      high: Math.round(mainBuilt.totals.high / Math.max(1, (DATA.days || []).length || 14)),
     },
     excluded: [
       "Location du camping-car",
@@ -259,39 +259,8 @@
     ],
   };
 
-  /* ---------- Variante best-of deltas ---------- */
-  const fuelAlt = [
-    item({
-      id: "fuel-cc",
-      label: "Diesel camping-car",
-      detail: "Mêmes transferts CC (~300 km)",
-      mid: 70,
-      low: 58,
-      high: 85,
-      confidence: "mid",
-      source: "OSRM",
-    }),
-    item({
-      id: "fuel-car",
-      label: "Diesel / essence voiture",
-      detail: "~950 km (Bavella + Rondinara/PV + sunset) · 7,5 L/100 · 1,95 €/L",
-      mid: 140,
-      low: 120,
-      high: 175,
-      confidence: "mid",
-      source: "OSRM variante best-of",
-    }),
-    item({
-      id: "fuel-buffer",
-      label: "Marge essence",
-      detail: "+12 %",
-      mid: 25,
-      low: 15,
-      high: 40,
-      confidence: "low",
-      source: "Marge",
-    }),
-  ];
+  /* ---------- Variantes page: same fuel as principal ---------- */
+  const fuelAlt = fuelMain;
 
   const activitiesAlt = [
     item({

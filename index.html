@@ -29,8 +29,9 @@
     </div>
     <nav class="drawer__nav" aria-label="Sections">
       <a href="#accueil" data-nav="home">Accueil</a>
+      <a href="#overview" data-nav="overview">Vue d'ensemble</a>
       <a href="#programme" data-nav="days">Programme</a>
-      <a href="./alt.html">Variante best-of</a>
+      <a href="./alt.html">Variantes &amp; replis</a>
       <a href="#budget" data-nav="budget">Budget</a>
       <a href="#bases" data-nav="bases">Campings</a>
       <a href="#checklist" data-nav="check">Check-list</a>
@@ -41,7 +42,7 @@
       <p class="drawer__label">Aller au jour</p>
       <div class="drawer__day-list" id="drawerDays"></div>
     </div>
-    <p class="drawer__note">Astuce : glisse horizontalement sur le programme pour changer de jour. Flèches ← → aussi. Hors ligne après la 1<sup>re</sup> ouverture.</p>
+    <p class="drawer__note">Glisse sur le programme pour changer de jour. Flèches ← → aussi. Hors ligne après la 1<sup>re</sup> ouverture (polices système en secours).</p>
   </aside>
   <div class="scrim" id="scrim" hidden></div>
 
@@ -75,8 +76,10 @@
         <p class="hero__lead" data-hero-reveal>
           Roadbook familial · nature, peu de villes, camping-car peu déplacé.
         </p>
+        <p class="hero__next" id="heroNext" data-hero-reveal></p>
         <div class="hero__cta" data-hero-reveal>
           <button class="btn btn--primary" id="jumpToday" type="button">Programme</button>
+          <a class="btn btn--ghost btn--on-hero" href="#overview">Vue d'ensemble</a>
         </div>
       </div>
     </section>
@@ -94,33 +97,36 @@
     <section class="panel" id="overview">
       <div class="section-head" data-reveal>
         <h2>Le séjour en un regard</h2>
-        <p>14 jours · 13 nuits · 3 bases · 1 camping-car + 1 voiture</p>
+        <p id="overviewLead">14 jours · 13 nuits · 4 étapes d'hébergement · 1 camping-car + 1 voiture</p>
       </div>
       <div class="stat-row" id="statRow" data-reveal></div>
+      <div class="overview-actions" id="overviewActions" data-reveal></div>
+      <div class="scenario-note" id="scenarioNote" data-reveal></div>
       <div class="overview-map-wrap" data-reveal>
-        <div id="overviewMap" class="map map--overview" role="img" aria-label="Carte des bases du séjour"></div>
+        <div id="overviewMap" class="map map--overview" role="img" aria-label="Carte des quatre étapes d'hébergement"></div>
         <ol class="map-legend map-legend--overview" id="overviewLegend"></ol>
-        <p class="map-caption">Bases dans l’ordre du séjour · trait = transfert principal</p>
+        <p class="map-caption">4 étapes d'hébergement dans l'ordre · trait = transfert principal (ordre des étapes)</p>
       </div>
-      <div class="route-strip" id="routeStrip" aria-label="Bases du séjour" data-reveal></div>
+      <div class="route-strip" id="routeStrip" aria-label="Étapes du séjour" data-reveal></div>
       <div class="rules" id="rules" data-reveal></div>
     </section>
 
     <section class="panel panel--flush" id="programme">
       <div class="section-head section-head--pad">
         <h2>Programme jour par jour</h2>
-        <p>Horaires indicatifs — glisse pour changer de jour · à ajuster selon météo et énergie.</p>
+        <p>Un seul programme recommandé — horaires indicatifs. Glisse pour changer de jour · à ajuster selon météo et énergie.</p>
         <p class="alt-entry">
-          <a href="./alt.html">Variante best-of</a>
-          — mêmes campings, plus de sites spectaculaires, Calanques de Piana conservées, replis Melo/Capitello.
+          <a href="./alt.html">Variantes &amp; replis</a>
+          — météo, accès fermés, option sportive Restonica. Ce n'est pas un second roadbook concurrent.
         </p>
       </div>
 
       <div class="day-switcher" id="daySwitcher">
         <button type="button" class="day-switcher__btn" id="prevDay" aria-label="Jour précédent">‹</button>
-        <button type="button" class="day-switcher__current" id="daySwitcherLabel" aria-haspopup="listbox">
+        <button type="button" class="day-switcher__current" id="daySwitcherLabel" aria-haspopup="dialog" aria-expanded="false" aria-controls="dayPicker">
           <span class="day-switcher__date" id="switchDate">—</span>
           <span class="day-switcher__title" id="switchTitle">—</span>
+          <span class="day-switcher__hint">Tous les jours</span>
         </button>
         <button type="button" class="day-switcher__btn" id="nextDay" aria-label="Jour suivant">›</button>
       </div>
@@ -139,8 +145,8 @@
 
     <section class="panel" id="bases">
       <div class="section-head">
-        <h2>Campings & bases</h2>
-        <p>Dates et campings inchangés · détails pratiques pour le terrain.</p>
+        <h2>Campings &amp; étapes</h2>
+        <p>4 étapes d'hébergement · dates et campings inchangés · détails pratiques pour le terrain.</p>
       </div>
       <div class="base-grid" id="baseGrid"></div>
     </section>
@@ -180,7 +186,7 @@
   </button>
 
   <div class="tip-layer" id="tipLayer" hidden>
-    <div class="tip-card" role="dialog" aria-modal="true" aria-labelledby="tipTitle">
+    <div class="tip-card" role="dialog" aria-modal="true" aria-labelledby="tipTitle" aria-describedby="tipBody">
       <button class="tip-card__close" id="tipClose" type="button" aria-label="Fermer">×</button>
       <p class="tip-card__eyebrow" id="tipEyebrow">Info</p>
       <h3 id="tipTitle"></h3>
@@ -189,7 +195,7 @@
   </div>
 
   <footer class="footer">
-    <p>Plan de voyage familial · infos au 30 juillet 2026 · pas une source temps réel.</p>
+    <p id="footerNote">Plan de voyage familial · pas une source temps réel.</p>
   </footer>
 
   <script src="./assets/vendor/leaflet.js"></script>
