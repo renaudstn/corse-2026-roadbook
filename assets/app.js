@@ -323,18 +323,26 @@
       document.body.appendChild(nav);
     }
     const items = [
-      $("#overview") ? { label: "Vue d'ensemble", href: "#overview", nav: "overview" } : null,
-      $("#programme") ? { label: "Programme", href: "#programme", nav: "days" } : null,
-      $("#bases") ? { label: "Campings", href: "#bases", nav: "bases" } : null,
-      { label: "Plus", action: "drawer", nav: "plus" },
+      $("#overview") ? { label: "Aperçu", href: "#overview", nav: "overview", icon: "grid" } : null,
+      $("#programme") ? { label: "Programme", href: "#programme", nav: "days", icon: "calendar" } : null,
+      $("#bases") ? { label: "Campings", href: "#bases", nav: "bases", icon: "pin" } : null,
+      { label: "Plus", action: "drawer", nav: "plus", icon: "menu" },
     ].filter(Boolean).slice(0, 4);
 
+    const icons = {
+      grid: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>',
+      calendar: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+      pin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+      menu: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+    };
+
     nav.innerHTML = items
-      .map((item) =>
-        item.action === "drawer"
-          ? `<button type="button" class="bottom-nav__item" data-open-drawer data-nav="${h(item.nav)}" aria-controls="drawer" aria-expanded="false">${h(item.label)}</button>`
-          : `<a class="bottom-nav__item" href="${h(item.href)}" data-nav="${h(item.nav)}">${h(item.label)}</a>`
-      )
+      .map((item) => {
+        const content = `<span class="bottom-nav__icon">${icons[item.icon] || ""}</span><span class="bottom-nav__label">${h(item.label)}</span>`;
+        return item.action === "drawer"
+          ? `<button type="button" class="bottom-nav__item" data-open-drawer data-nav="${h(item.nav)}" aria-controls="drawer" aria-expanded="false">${content}</button>`
+          : `<a class="bottom-nav__item" href="${h(item.href)}" data-nav="${h(item.nav)}">${content}</a>`;
+      })
       .join("");
     document.body.classList.add("has-bottom-nav");
     menuBtn?.classList.add("menu-btn--with-bottom-nav");
@@ -423,17 +431,20 @@
     const statRow = $("#statRow");
     if (statRow) {
       const items = [
-        { value: stats.days, label: "jours" },
-        { value: stats.nights, label: "nuits" },
-        { value: stats.stages, label: "étapes" },
-        { value: stats.vehicles, label: "véhicules" },
+        { value: stats.days, label: "jours", primary: true },
+        { value: stats.nights, label: "nuits", primary: true },
+        { value: stats.stages, label: "étapes", primary: true },
+        { value: stats.vehicles, label: "véhicules", primary: true },
         { value: stats.bigDays, label: "grandes journées" },
         { value: stats.reserved, label: "réservées" },
         { value: stats.unreserved, label: "à caler" },
         { value: `${Math.round(stats.distanceKm)} km`, label: "route estimée" },
       ];
       statRow.innerHTML = items
-        .map((s) => `<div class="stat"><strong>${h(s.value)}</strong><span>${h(s.label)}</span></div>`)
+        .map(
+          (s) =>
+            `<div class="stat${s.primary ? " stat--primary" : " stat--secondary"}"><strong>${h(s.value)}</strong><span>${h(s.label)}</span></div>`
+        )
         .join("");
     }
 
@@ -446,8 +457,8 @@
     if (overviewActions) {
       const next = uncheckedChecklist();
       overviewActions.innerHTML = `
-        <a class="btn btn--small" href="#programme">Voir le programme</a>
-        <a class="btn btn--small btn--ghost" href="#checklist">Check-list</a>
+        <a class="btn btn--small btn--solid" href="#programme">Voir le programme</a>
+        <a class="btn btn--small btn--panel" href="#checklist">Check-list</a>
         ${
           next.length
             ? `<div class="overview-next">
@@ -788,7 +799,9 @@
   };
 
   const closeFullscreenMaps = () => {
-    $$(".map-block.is-fullscreen").forEach((block) => block.classList.remove("is-fullscreen"));
+    $$(".map-block.is-expanded, .overview-map-wrap.is-expanded").forEach((block) =>
+      block.classList.remove("is-expanded")
+    );
     refreshMap(dayMap);
     refreshMap(overviewMap);
   };
@@ -798,8 +811,8 @@
     if (!expand) return;
     const block = expand.closest(".map-block, .overview-map-wrap");
     if (!block) return;
-    block.classList.toggle("is-fullscreen");
-    expand.setAttribute("aria-expanded", String(block.classList.contains("is-fullscreen")));
+    block.classList.toggle("is-expanded");
+    expand.setAttribute("aria-expanded", String(block.classList.contains("is-expanded")));
     refreshMap(dayMap);
     refreshMap(overviewMap);
   });
@@ -813,7 +826,7 @@
     `<div class="metric ${h(extraClass)}"><span>${h(label)}</span><strong>${h(value)}</strong></div>`;
 
   const levelOneMetrics = (day) => [
-    metricHtml("Départ", formatTime(day.schedule?.departure), isEarlyDeparture(day.schedule?.departure) ? "badge--early" : ""),
+    metricHtml("Départ", formatTime(day.schedule?.departure), isEarlyDeparture(day.schedule?.departure) ? "metric--early" : ""),
     metricHtml("Distance", formatKm(day.travel?.distanceKm)),
     metricHtml("Conduite", formatMinutes(day.travel?.drivingMinutes)),
     metricHtml("Activité", formatMinutes(day.activity?.durationMinutes)),
@@ -837,8 +850,15 @@
           .map((t) => t.title)
           .slice(0, 5);
     if (!highlights.length) return "";
-    return `<ol class="day-highlights">
-      ${highlights.map((item) => `<li>${h(item)}</li>`).join("")}
+    return `<ol class="day-highlights" aria-label="Étapes principales">
+      ${highlights
+        .map(
+          (item, index) => `<li>
+            <span class="day-highlights__n" aria-hidden="true">${index + 1}</span>
+            <span class="day-highlights__text">${h(item)}</span>
+          </li>`
+        )
+        .join("")}
     </ol>`;
   };
 
@@ -1111,40 +1131,40 @@
     dayMap = destroyMap(dayMap);
 
     const altLinkHtml = IS_ALT
-      ? `<a class="day-alt-link btn btn--small" href="./index.html?day=${h(day.id)}#programme">Programme principal</a>`
-      : `<a class="day-alt-link btn btn--small" href="./alt.html?day=${h(day.id)}">Variantes & replis</a>`;
+      ? `<a class="day-alt-link btn btn--small btn--on-dark" href="./index.html?day=${h(day.id)}#programme">Programme principal</a>`
+      : `<a class="day-alt-link btn btn--small btn--on-dark" href="./alt.html?day=${h(day.id)}">Variantes & replis</a>`;
+
+    const summaryText =
+      day.title && day.short && day.title !== day.short ? day.title : day.summary || "";
 
     stage.innerHTML = `<article class="day-card" id="day-${h(day.id)}">
       <div class="day-card__hero">
         <div class="day-card__meta">
           <span class="tag">${h(day.weekday)} ${h(day.dayNum)} août</span>
           <span class="tag">${h(categoryLabel(day))}</span>
-          ${isToday ? `<span class="tag">Aujourd'hui</span>` : ""}
-          ${arrays(day.tags)
-            .slice(0, 2)
-            .map((t) => `<span class="tag">${h(t)}</span>`)
-            .join("")}
+          ${isToday ? `<span class="tag tag--today">Aujourd'hui</span>` : ""}
         </div>
         <h3>${h(day.short || day.title)}</h3>
-        ${day.title && day.short && day.title !== day.short ? `<p class="lead">${h(day.title)}</p>` : day.summary ? `<p class="lead">${h(day.summary)}</p>` : ""}
+        ${summaryText ? `<p class="lead">${h(summaryText)}</p>` : ""}
         <div class="day-card__badges">
-          <span class="badge ${h(intensityClass(day.intensity))}">${h(intensityLabel(day.intensity))}</span>
-          ${isEarlyDeparture(day.schedule?.departure) ? `<span class="badge badge--early">Départ tôt ${h(formatTime(day.schedule.departure))}</span>` : ""}
+          <span class="badge badge--on-dark ${h(intensityClass(day.intensity))}">${h(intensityLabel(day.intensity))}</span>
+          ${isEarlyDeparture(day.schedule?.departure) ? `<span class="badge badge--on-dark badge--early">Départ tôt · ${h(formatTime(day.schedule.departure))}</span>` : ""}
         </div>
-        <div class="day-alt-row">${altLinkHtml}</div>
+        <div class="metrics metrics--hero">${levelOneMetrics(day).join("")}</div>
         ${
           day.budgetDay
-            ? `<p class="day-cost-chip" title="${h(day.budgetDay.note || "")}">Coût jour ~ <strong>${h(day.budgetDay.mid)} €</strong><span>estimation milieu</span></p>`
+            ? `<p class="day-cost-chip day-cost-chip--on-dark" title="${h(day.budgetDay.note || "")}">Coût jour ~ <strong>${h(day.budgetDay.mid)} €</strong><span>estimation milieu</span></p>`
             : ""
         }
+        <div class="day-alt-row">${altLinkHtml}</div>
       </div>
 
       <div class="day-layout">
         <div class="day-layout__main">
           <section class="day-level day-level--primary" aria-label="Essentiel du jour">
-            ${highlightsHtml(day)}
             ${criticalAlertsHtml(day)}
-            ${maps ? `<p class="day-primary-action"><a class="btn btn--primary" href="${h(maps)}" target="_blank" rel="noopener">Ouvrir l'itinéraire Google Maps ↗</a></p>` : ""}
+            ${highlightsHtml(day)}
+            ${maps ? `<p class="day-primary-action"><a class="btn btn--primary" href="${h(maps)}" target="_blank" rel="noopener">Itinéraire Google Maps</a></p>` : ""}
           </section>
 
           <section class="day-level day-level--secondary" aria-label="Détails pratiques">
@@ -1158,8 +1178,7 @@
           </section>
         </div>
 
-        <aside class="day-layout__aside" aria-label="Carte et métriques du jour">
-          <div class="metrics">${levelOneMetrics(day).join("")}</div>
+        <aside class="day-layout__aside" aria-label="Carte du jour">
           ${mapBlockHtml(day)}
         </aside>
       </div>
